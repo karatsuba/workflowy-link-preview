@@ -1,0 +1,14 @@
+{
+    "name": "Workflowy link preview",
+    "version": "1.0",
+    "description": "Workflowy link preview",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "manifest_version": 2
+}
