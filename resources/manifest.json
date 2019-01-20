@@ -6,6 +6,14 @@
         "scripts": ["background.js"],
         "persistent": false
     },
+    "content_scripts": [
+        {
+          "matches": [
+            "*://workflowy.com/*"
+          ],
+          "js": ["content.js"]
+        }
+    ],
     "permissions": [
         "http://*/*",
         "https://*/*"
