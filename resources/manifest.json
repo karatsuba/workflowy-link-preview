@@ -3,7 +3,7 @@
     "version": "1.0",
     "description": "Workflowy link preview",
     "background": {
-        "scripts": ["background.js", "hot-reload.js"],
+        "scripts": ["background.js"],
         "persistent": false
     },
     "content_scripts": [
