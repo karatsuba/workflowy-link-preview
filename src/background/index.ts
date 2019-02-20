@@ -1,7 +1,3 @@
-export class App {
-    static run() {
-        console.log('test here');
-    };
-}
+import {Parser} from './services/Parser';
 
-App.run();
+Parser.create().parseURL('https://github.com/karatsuba').then(console.dir);
