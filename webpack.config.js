@@ -11,6 +11,7 @@ const PATHS = {
 
 const getBaseConfig = (options = {}) => ({
     mode: 'development',
+    devtool: 'cheap-source-map',
     module: {
         rules: [
             {
