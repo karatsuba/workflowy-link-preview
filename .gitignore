@@ -9,11 +9,8 @@ node_modules/
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
-# production
-/build
+# prod build
+/dist
 
 # misc
 .DS_Store

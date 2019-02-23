@@ -1,8 +1,15 @@
 const path = require('path');
 
-module.exports = {
+const PATHS = {
+    DIST: path.resolve(__dirname, "./dist"),
+    SRC_BACKGROUND: path.resolve(__dirname, "./src/background"),
+    SRC_CONTENT: path.resolve(__dirname, "./src/content"),
+    RESOURCES: path.resolve(__dirname, "./resources"),
+    MANIFEST: path.resolve(__dirname, "./resources/manifest.json")
+};
+
+const getBaseConfig = (options = {}) => ({
     mode: 'development',
-    entry: './src/background/index.ts',
     module: {
         rules: [{
             test: /\.tsx?$/,
@@ -12,9 +19,27 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
+    }
+});
+
+const background = Object.assign({}, getBaseConfig(), {
+    entry: {
+        index: path.resolve(PATHS.SRC_BACKGROUND)
     },
     output: {
         filename: 'background.js',
-        path: path.resolve(__dirname, 'resources')
+        path: PATHS.DIST
     }
-};
+});
+
+const content = Object.assign({}, getBaseConfig(), {
+    entry: {
+        index: path.resolve(PATHS.SRC_CONTENT)
+    },
+    output: {
+        filename: 'content.js',
+        path: PATHS.DIST
+    }
+});
+
+module.exports = [background, content];
