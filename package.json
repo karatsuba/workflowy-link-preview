@@ -16,5 +16,10 @@
   },
   "scripts": {
     "dev": "webpack --watch --progress"
+  },
+  "dependencies": {
+    "react": "^16.8.3",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1"
   }
 }
