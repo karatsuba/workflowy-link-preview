@@ -47,11 +47,6 @@ const initLinkObserver = () => {
 
 initLinkObserver();
 
-// const observer: Observer = new Observer(
-//     <HTMLElement>document.getElementById('app'),
-//     callback
-// );
-
 const createPreviewButtonNode = (target: any) => {
     // if (target.nextSibling && target.nextSibling.tagName !== 'SPAN') {
     console.log('GOING TO INSERT NODE', target);
