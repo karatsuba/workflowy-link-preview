@@ -18,7 +18,10 @@
     "dev": "webpack --watch --progress"
   },
   "dependencies": {
+    "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1"
   }

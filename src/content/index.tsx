@@ -1,6 +1,8 @@
 import { Observer } from './services/Observer';
 import { Links } from './models/Links';
-
+import {Component as LinkObserver} from './conteiners/LinkObserver';
+import * as ReactDOM from 'react-dom';
+import * as React from 'react'
 import { createStore } from 'redux';
 
 const reducer = (state = { links: Links.create([]) }, action: any): any => {
@@ -36,10 +38,19 @@ const callback = (mutations: MutationRecord[]) => {
     });
 };
 
-const observer: Observer = new Observer(
-    <HTMLElement>document.getElementById('app'),
-    callback
-);
+const initLinkObserver = () => {
+    const root = document.getElementById('app') as HTMLElement;
+    const container = document.createElement('div');
+    root.appendChild(container);
+    ReactDOM.render(<LinkObserver />, container);
+}
+
+initLinkObserver();
+
+// const observer: Observer = new Observer(
+//     <HTMLElement>document.getElementById('app'),
+//     callback
+// );
 
 const createPreviewButtonNode = (target: any) => {
     // if (target.nextSibling && target.nextSibling.tagName !== 'SPAN') {
