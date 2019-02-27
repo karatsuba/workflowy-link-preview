@@ -13,11 +13,8 @@ class LinkPreviewPortal extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        // also observer stop here
         console.log('MOUNT LINK HERE');
-        // this.props.observer.disconnect();
-        // this.props.observer.takeRecords();
-        // this.linkElement.appendChild(this.container);
+        this.linkElement.appendChild(this.container);
     }
 
     render(): JSX.Element {

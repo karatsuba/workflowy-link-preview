@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
 
 const PATHS = {
     DIST: path.resolve(__dirname, './dist'),
@@ -26,25 +27,19 @@ const getBaseConfig = (options = {}) => ({
     }
 });
 
-const background = Object.assign({}, getBaseConfig(), {
+const config = Object.assign({}, getBaseConfig(), {
     entry: {
-        index: path.resolve(PATHS.SRC_BACKGROUND)
+        background: path.resolve(PATHS.SRC_BACKGROUND),
+        content: path.resolve(PATHS.SRC_CONTENT)
     },
     output: {
-        filename: 'background.js',
+        filename: '[name].js',
         path: PATHS.DIST
     },
-    plugins: [new CopyPlugin([{ from: PATHS.MANIFEST, to: PATHS.DIST }])]
+    plugins: [
+        new ChromeExtensionReloader(),
+        new CopyPlugin([{ from: PATHS.MANIFEST, to: PATHS.DIST }])
+    ]
 });
 
-const content = Object.assign({}, getBaseConfig(), {
-    entry: {
-        index: path.resolve(PATHS.SRC_CONTENT)
-    },
-    output: {
-        filename: 'content.js',
-        path: PATHS.DIST
-    }
-});
-
-module.exports = [background, content];
+module.exports = config;

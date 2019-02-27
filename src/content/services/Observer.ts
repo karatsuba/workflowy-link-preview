@@ -48,7 +48,6 @@ export class Observer {
         mutations.forEach(mutation => {
 
             if(mutation.addedNodes.length > 0){
-
                 
                 const contentLinks = Array.from(mutation.addedNodes).filter(node => {
                     const isContentLink = (node as Element).classList && (node as Element).classList.contains('contentLink');
@@ -65,10 +64,6 @@ export class Observer {
                 }
 
             }
-
-            // if(mutation.previousSibling && (mutation.previousSibling as Element).classList.contains('contentLink')){
-            //     console.log('I HAVE ALREADY THIS');
-            // }
         });
     }
 }
