@@ -4,6 +4,11 @@ import createMutationObserver from './createMutationObserver';
 export default class ReduxMutationObserver {
     observer: MutationObserver | null = null;
 
+    private options: object = {
+        childList: true,
+        subtree: true
+    };
+
     observe({ dispatch }: { dispatch: Dispatch }) {
         if (!this.observer) {
             this.observer = createMutationObserver(dispatch);
@@ -11,7 +16,7 @@ export default class ReduxMutationObserver {
 
         const target = document.getElementById('app');
         if (target) {
-            this.observer.observe(target);
+            this.observer.observe(target, this.options);
         }
     }
 

@@ -1,13 +1,12 @@
 import { Links } from './models/Links';
 import LinkObserver from './conteiners/LinkObserver';
-import * as ReactDOM from 'react-dom';
-import * as React from 'react';
+import ReactDOM from 'react-dom';
+import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
-
-import { Observer } from './services/Observer';
+import mutationObserver from './middleware';
 
 const reducer = (state = { links: Links.create([]) }, action: any): any => {
     switch (action.type) {
@@ -20,10 +19,8 @@ const reducer = (state = { links: Links.create([]) }, action: any): any => {
     }
 };
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(reducer, applyMiddleware(thunk, mutationObserver, logger));
 
-// consider putting observer into LinkObserver
-const observer: Observer = Observer.init();
 
 const initApp = () => {
     // put creatin logic inside main component
@@ -32,18 +29,10 @@ const initApp = () => {
     root.appendChild(container);
     ReactDOM.render(
         <Provider store={store}>
-            <LinkObserver observer={observer.withDispatch(store.dispatch)} />
+            <LinkObserver />
         </Provider>,
         container
     );
 };
 
 initApp();
-
-const createPreviewButtonNode = (target: any) => {
-    // if (target.nextSibling && target.nextSibling.tagName !== 'SPAN') {
-    console.log('GOING TO INSERT NODE', target);
-    // const span = document.createElement("span");
-    // target.parentNode.insertBefore(span, target.nextSibling);
-    // }
-};
