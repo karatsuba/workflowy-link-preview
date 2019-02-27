@@ -1,20 +1,31 @@
 import * as React from 'react'
-import {Observer} from '../services/Observer';
+import {connect} from 'react-redux';
 
-class Component extends React.Component<any, any> {
-    private observer: Observer = Observer.init();
+class LinkObserver extends React.Component<any, any> {
 
     componentDidMount() {
         console.log('GOING OT SUBCRIBE TO OBSERVER');
-        this.observer.observe()
+        this.props.observer.observe();
+    }
+
+    shouldComponentUpdate(nextProps:any) {
+        // compare ids
+        // console.log(JSON.stringify(this.props.links));
+        // console.log(JSON.stringify(nextProps.links));
+        // console.log(this);
+        return true;
     }
 
     render(): JSX.Element {
         console.log('HELLO FROM RENDERED APP');
         return (<div></div>)
     }
+
 }
 
-export { 
-    Component
-};
+const mapStateToProps = (state: any, ownProps: any) => ({
+    links: state.links,
+    observer: ownProps.observer
+})
+
+export default connect(mapStateToProps)(LinkObserver)
