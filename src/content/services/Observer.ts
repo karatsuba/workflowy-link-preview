@@ -45,22 +45,30 @@ export class Observer {
     }
 
     private mutationCallback(mutations: MutationRecord[]) {
-        
-        const getLinks = (node: Node) => {
-            return Array.from(
-                (node as HTMLElement).getElementsByClassName('contentLink')
-            );
-        };
-        
         mutations.forEach(mutation => {
-            console.log(mutation);
-            
-            const links = getLinks(mutation.target);
 
-            this.dispatch({
-                type: 'NEW_LINK',
-                payload: Links.create(links)
-            });
+            if(mutation.addedNodes.length > 0){
+
+                
+                const contentLinks = Array.from(mutation.addedNodes).filter(node => {
+                    const isContentLink = (node as Element).classList && (node as Element).classList.contains('contentLink');
+                    return isContentLink;
+                });
+
+                if (contentLinks.length > 0) {
+                    console.log(mutation);
+
+                    this.dispatch({
+                        type: 'NEW_LINK',
+                        payload: Links.create(contentLinks as Element[])
+                    });
+                }
+
+            }
+
+            // if(mutation.previousSibling && (mutation.previousSibling as Element).classList.contains('contentLink')){
+            //     console.log('I HAVE ALREADY THIS');
+            // }
         });
     }
 }

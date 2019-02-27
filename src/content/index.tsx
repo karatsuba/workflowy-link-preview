@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import { Observer } from './services/Observer';
 
 const reducer = (state = { links: Links.create([]) }, action: any): any => {
-    console.log('ACTION', action);
     switch (action.type) {
         case 'NEW_LINK':
             return {
