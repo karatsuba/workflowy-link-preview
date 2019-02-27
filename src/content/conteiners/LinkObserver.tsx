@@ -13,12 +13,11 @@ class LinkObserver extends React.Component<any, any> {
         // compare ids
         // console.log(JSON.stringify(this.props.links));
         // console.log(JSON.stringify(nextProps.links));
-        // console.log(this);
         return true;
     }
 
     render(): JSX.Element[] | null {
-        console.log('HELLO FROM RENDERED APP + RELOAD!!');
+        console.log('HELLO FROM RENDERED APP + RELOAD');
         return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
             return <LinkPreviewPortal key={key} link={link} observer={this.props.observer} />
         }): null;
