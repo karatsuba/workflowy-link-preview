@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux';
+import LinkPreviewPortal from '../components/LinkPreviewPortal';
 
 class LinkObserver extends React.Component<any, any> {
 
@@ -16,9 +17,12 @@ class LinkObserver extends React.Component<any, any> {
         return true;
     }
 
-    render(): JSX.Element {
+    render(): JSX.Element[] | null {
         console.log('HELLO FROM RENDERED APP');
-        return (<div></div>)
+        return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
+            console.log(key, link);
+            return <LinkPreviewPortal key={key} link={link} observer={this.props.observer} />
+        }): null;
     }
 
 }

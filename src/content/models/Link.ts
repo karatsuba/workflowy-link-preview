@@ -18,6 +18,10 @@ export class Link {
         return this.id;
     }
 
+    public getElement() {
+        return this.element;
+    }
+
     static create(element: Element) {
         return new Link(element);
     }

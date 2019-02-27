@@ -31,6 +31,15 @@ export class Observer {
         }
     }
 
+    disconnect(): void {
+        this.observer.disconnect();
+    }
+
+    takeRecords(): void {
+        const events = this.observer.takeRecords();
+        console.log(events);
+    }
+
     private getTarget() {
         return document.getElementById('app');
     }
@@ -44,6 +53,8 @@ export class Observer {
         };
         
         mutations.forEach(mutation => {
+            console.log(mutation);
+            
             const links = getLinks(mutation.target);
 
             this.dispatch({

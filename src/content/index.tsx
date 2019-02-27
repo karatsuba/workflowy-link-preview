@@ -23,9 +23,11 @@ const reducer = (state = { links: Links.create([]) }, action: any): any => {
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
 
+// consider putting observer into LinkObserver
 const observer: Observer = Observer.init();
 
 const initApp = () => {
+    // put creatin logic inside main component
     const root = document.getElementById('app') as HTMLElement;
     const container = document.createElement('div');
     root.appendChild(container);

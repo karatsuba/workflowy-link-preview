@@ -31,4 +31,8 @@ export class Links {
     public getLinks() {
         return this.links.entries();
     }
+
+    public getSize() {
+        return this.links.size;
+    }
 }
