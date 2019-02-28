@@ -9,3 +9,5 @@ TODO:
 - probably mutations is kind of side effects, should handle via redux-thunk
 
 - consider creating redux mutation observer middleware package
+
+- remove pimage preview if node was deleted

@@ -5,7 +5,13 @@ export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
 
         mutations.forEach(mutation => {
-            console.log('ALL MUTATION', mutation);
+            // console.log('ALL MUTATION', mutation);
+
+            // TODO: find solution for node edit remove
+            // if(mutation.removedNodes.length > 0) {
+            //     console.log('MUTATION', mutation);
+            //     console.log('REMOVED NODES', mutation.removedNodes);
+            // }
 
             if (mutation.addedNodes.length > 0) {
                 const contentLinks = Array.from(mutation.addedNodes).filter(
@@ -19,7 +25,7 @@ export default (dispatch: Dispatch) => {
 
                 if (contentLinks.length > 0) {
 
-                    console.log('CONTENT LINK', mutation);
+                    // console.log('CONTENT LINK', mutation);
                     dispatch({
                         type: 'NEW_LINK',
                         payload: Links.create(contentLinks as Element[])
