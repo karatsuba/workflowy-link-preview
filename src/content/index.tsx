@@ -1,25 +1,8 @@
-import { Links } from './models/Links';
-import LinkObserver from './conteiners/LinkObserver';
-import ReactDOM from 'react-dom';
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import mutationObserver from './middleware';
-
-const reducer = (state = { links: Links.create([]) }, action: any): any => {
-    switch (action.type) {
-        case 'NEW_LINK':
-            return {
-                links: Links.merge(state.links, action.payload)
-            };
-        default:
-            return state;
-    }
-};
-
-const store = createStore(reducer, applyMiddleware(thunk, mutationObserver, logger));
+import LinkObserver from './conteiners/LinkObserver';
+import store from './store';
 
 
 const initApp = () => {
