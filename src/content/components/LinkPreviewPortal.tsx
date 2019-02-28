@@ -13,8 +13,12 @@ class LinkPreviewPortal extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        console.log('MOUNT LINK HERE');
-        this.linkElement.appendChild(this.container);
+        console.log('MOUNT PREVIEW ON LINK PARENT');
+        const nameContainer = this.linkElement.closest('div.name');
+        const parentContainer = nameContainer ? nameContainer : this.linkElement.closest('div.notes');
+        if(parentContainer){
+            parentContainer.appendChild(this.container);
+        }
     }
 
     render(): JSX.Element {

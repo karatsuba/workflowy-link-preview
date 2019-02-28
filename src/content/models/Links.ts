@@ -20,7 +20,10 @@ export class Links {
     }
 
     public setLink(link: Link) {
-        this.links.set(link.getId(), link);
+        const id = link.getId();
+        if(id) {
+            this.links.set(id, link);
+        }
     }
 
     public setLinks(links: Map<string, Link>) {
