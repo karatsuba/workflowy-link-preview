@@ -23,7 +23,7 @@ class LinkObserver extends React.Component<any, any> {
         console.log('HELLO FROM RENDERED APP + RELOAD', this.props);
         return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
             return <LinkPreviewPortal key={key} link={link} />
-        }): null;
+        }) : null;
     }
 
 }

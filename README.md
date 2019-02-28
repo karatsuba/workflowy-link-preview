@@ -6,8 +6,10 @@ TODO:
 
 - configure eslint (https://javascriptplayground.com/typescript-eslint/)
 
-- probably mutations is kind of side effects, should handle via redux-thunk
+- ~~probably mutations is kind of side effects, should handle via redux-thunk~~
 
-- consider creating redux mutation observer middleware package
+- ~~consider creating redux mutation observer middleware package~~
 
-- remove pimage preview if node was deleted
+- ~~remove image preview if node was deleted~~
+
+- improve components render performance (don't rerender twice, etc)

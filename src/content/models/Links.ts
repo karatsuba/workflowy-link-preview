@@ -19,6 +19,13 @@ export class Links {
         return Links.create().setLinks(links)
     }
 
+    public remove(links: Links) {
+        [...links.getLinks()].forEach(([key, link]) => {
+            this.links.delete(key);
+        });
+        return Links.create().setLinks(this.links);
+    }
+
     public setLink(link: Link) {
         const id = link.getId();
         if(id) {
