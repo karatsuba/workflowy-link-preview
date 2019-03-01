@@ -5,8 +5,6 @@ import LinkPreviewPortal from '../components/LinkPreviewPortal';
 class LinkObserver extends React.Component<any, any> {
 
     componentDidMount() {
-        // console.log('GOING OT SUBCRIBE TO OBSERVER');
-        // this.props.observer.observe();
         this.props.dispatch({
             type: 'MUTATION_OBSERVER__OBSERVE'
         });
@@ -20,7 +18,7 @@ class LinkObserver extends React.Component<any, any> {
     }
 
     render(): JSX.Element[] | null {
-        console.log('HELLO FROM RENDERED APP + RELOAD', this.props);
+        console.log('RENDER: LinkObserver', this.props);
         return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
             return <LinkPreviewPortal key={key} link={link} />
         }) : null;

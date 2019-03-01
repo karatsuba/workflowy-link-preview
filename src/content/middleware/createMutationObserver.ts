@@ -1,38 +1,36 @@
 import { Dispatch } from 'redux';
 import { Links } from '../models/Links';
 
-const getContentLinks = (nodes: NodeList) => {
-    return Array.from(nodes).filter(
-        node => {
-            const isContentLink = (node as Element).classList && (node as Element).classList.contains('contentLink');
-            return isContentLink;
-        }
+const filterContentLinks = (nodes: NodeList) => {
+    const CONTENT_LINK_CLASS_NAME = 'contentLink';
+    return Array.from(nodes).filter(node =>
+        node instanceof HTMLElement
+            ? node.classList.contains(CONTENT_LINK_CLASS_NAME)
+            : false
     );
-}
+};
 
-const getLinks = (node: Node) => {
-    return Array.from(
-        (node as HTMLElement).getElementsByClassName('contentLink')
-    );
+const findContentLinks = (nodes: NodeList) => {
+    const CONTENT_LINK_CLASS_NAME = 'contentLink';
+
+    const res = Array.from(nodes).reduce((result, node) => {
+        const contentLinks = node instanceof HTMLElement ? node.getElementsByClassName(CONTENT_LINK_CLASS_NAME) : [];
+        return [...result, ...contentLinks];
+    }, [] as Element[]);
+    return res;
 };
 
 export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
-
         mutations.forEach(mutation => {
-            console.log('ALL MUTATION', mutation);
+            // console.log('ALL MUTATION', mutation.removedNodes);
 
-            // TODO: find solution for node edit remove
-            // if(mutation.removedNodes.length > 0) {
-            //     console.log('MUTATION', mutation);
-            //     console.log('REMOVED NODES', mutation.removedNodes);
-            // }
-
+            // TODO: send only connected links
             if (mutation.addedNodes.length > 0) {
-                const contentLinks = getContentLinks(mutation.addedNodes);
+                const contentLinks = filterContentLinks(mutation.addedNodes);
 
                 if (contentLinks.length > 0) {
-                    // console.log('CONTENT LINK', mutation);
+                    // console.log('CONTENT LINK', contentLinks);
                     dispatch({
                         type: 'ADD_LINK',
                         payload: Links.create(contentLinks as Element[])
@@ -41,14 +39,18 @@ export default (dispatch: Dispatch) => {
             }
 
             if (mutation.removedNodes.length > 0) {
-                let removedLinks = getContentLinks(mutation.removedNodes);
+                // should disting link editing and link remove
+                // here I have edited links
+                // let removedLinks = filterContentLinks(mutation.removedNodes);
 
-                if(removedLinks.length === 0) {
-                    removedLinks = getLinks(mutation.removedNodes[0])
-                }
+                // if (removedLinks.length === 0) {
+                    // here I have removed nodes, that contains links
+                    const removedLinks = findContentLinks(mutation.removedNodes);
+                // }
 
+                // FOR NOW I"M SENDING LINKS WITH NULL
                 if (removedLinks.length > 0) {
-                    // console.log('CONTENT LINK', mutation);
+                    console.log('REMOVE CONTENT LINK', mutation);
                     dispatch({
                         type: 'REMOVE_LINK',
                         payload: Links.create(removedLinks as Element[])

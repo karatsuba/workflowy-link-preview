@@ -9,7 +9,10 @@ export class Link {
         this.href = this.element.href;
     }
 
+    // TODO: get id from bullet href link
     private findClosestProjectId(element: Element) {
+        console.log('CLOSEST BULLET', element.closest('a.bullet'));
+        
         const project = element.closest('div.project');
         return project ? project.getAttribute('projectid') : null;
     }
