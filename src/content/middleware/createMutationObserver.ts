@@ -28,13 +28,8 @@ export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
         mutations.forEach(mutation => {
             // MUTATION CASES:
-
-            // TODO
-                // tree travesting with click and "<" ">" buttons
-            
-            // DONE
                 // case with moving up/down
-                
+                // tree travesting with click and "<" ">" buttons
                 // case edit
                 // case with open/close
                 // case with tab
@@ -69,7 +64,7 @@ export default (dispatch: Dispatch) => {
             }
 
             if (mutation.removedNodes.length > 0) {
-                console.log('REMOVE MUTATION', mutation);
+                // console.log('REMOVE MUTATION', mutation);
 
                 // CONTENT DIV WAS EDITED
                 if(mutation.target instanceof HTMLElement && mutation.target.classList.contains('content')) {
@@ -104,6 +99,19 @@ export default (dispatch: Dispatch) => {
                 // CHILDREN NODE WAS MOVED (DELETED) WITH TAB OR DRAGGED BY MOUSE
                 if(mutation.target instanceof HTMLElement && mutation.target.classList.contains('children')) {
                     // CONTENT LINK NODE WERE MOVED => DELETED
+                    if(findContentLinks(mutation.removedNodes).length > 0){
+                        // GET LINKS ID AND DISPATCH REMOVE ACTION
+                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(findClosestProjectId);
+                        dispatch({
+                            type: 'REMOVE_LINK',
+                            payload: removedContentLinks
+                        });
+                    }
+                }
+
+                // PAGE NODES WERE DELETED WITH "<", ">" OR BULLET CLICK
+                if(mutation.target instanceof HTMLElement && mutation.target.classList.contains('page')) {
+                    // CONTENT LINK NODE WERE REMOVED
                     if(findContentLinks(mutation.removedNodes).length > 0){
                         // GET LINKS ID AND DISPATCH REMOVE ACTION
                         const removedContentLinks = findContentLinks(mutation.removedNodes).map(findClosestProjectId);
