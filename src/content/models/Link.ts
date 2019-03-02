@@ -11,8 +11,6 @@ export class Link {
 
     // TODO: get id from bullet href link
     private findClosestProjectId(element: Element) {
-        console.log('CLOSEST BULLET', element.closest('a.bullet'));
-        
         const project = element.closest('div.project');
         return project ? project.getAttribute('projectid') : null;
     }

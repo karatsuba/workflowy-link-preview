@@ -19,9 +19,9 @@ export class Links {
         return Links.create().setLinks(links)
     }
 
-    public remove(links: Links) {
-        [...links.getLinks()].forEach(([key, link]) => {
-            this.links.delete(key);
+    public remove(ids: string[]) {
+        [...ids].forEach((id) => {
+            this.links.delete(id);
         });
         return Links.create().setLinks(this.links);
     }
