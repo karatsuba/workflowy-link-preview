@@ -1,14 +1,18 @@
 import { Dispatch } from 'redux';
 import { Links } from '../models/Links';
+import { element } from 'prop-types';
 
 const filterContentLinks = (nodes: NodeList) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
-    return Array.from(nodes).filter(node =>
-        node instanceof HTMLElement
-            ? node.classList.contains(CONTENT_LINK_CLASS_NAME)
-            : false
-    );
+    return Array.from(nodes).reduce((result, node) => {
+        if (node instanceof HTMLElement && node.classList.contains(CONTENT_LINK_CLASS_NAME)) {
+            return [...result, node];
+        }
+        return result;
+    }, [] as Element[]);
 };
+
+const isConnectedLink = (element: Element) => element.isConnected;
 
 const findContentLinks = (nodes: NodeList | Element[]) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
@@ -37,13 +41,13 @@ export default (dispatch: Dispatch) => {
 
 
             if (mutation.addedNodes.length > 0) {
-                console.log('ADD MUTATION', mutation);
+                // console.log('ADD MUTATION', mutation);
                 
                 // CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS
                 if(mutation.target instanceof HTMLElement && mutation.target.classList.contains('children')) {
                     // CONTENT LINK WAS ADDED
                     if(findContentLinks(mutation.addedNodes).length > 0) {
-                        // GET LINKs AND DISPATCH ADD ACTION
+                        // GET LINKS AND DISPATCH ADD ACTION
                         const addedContentLinks = findContentLinks(mutation.addedNodes);
                         dispatch({
                             type: 'ADD_LINK',
@@ -52,14 +56,18 @@ export default (dispatch: Dispatch) => {
                     }
                 }
 
-                const contentLinks = filterContentLinks(mutation.addedNodes);
-
-                if (contentLinks.length > 0) {
-                    // console.log('CONTENT LINK', contentLinks);
-                    dispatch({
-                        type: 'ADD_LINK',
-                        payload: Links.create(contentLinks as Element[])
-                    });
+                // CONTENT DIV WAS EDITED
+                if(mutation.target instanceof HTMLElement && mutation.target.classList.contains('content')) {
+                    // CONTENT LINK WAS ADDED
+                    if(filterContentLinks(mutation.addedNodes).filter(isConnectedLink).length > 0) {
+                        // GET LINKS AND DISPATCH ADD ACTION
+                        const addedContentLinks = filterContentLinks(mutation.addedNodes).filter(isConnectedLink);
+                        dispatch({
+                            type: 'ADD_LINK',
+                            payload: Links.create(addedContentLinks)
+                        });
+                    }
+                    
                 }
             }
 
