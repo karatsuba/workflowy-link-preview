@@ -31,6 +31,7 @@ export class Links {
         if(id) {
             this.links.set(id, link);
         }
+        return this;
     }
 
     public setLinks(links: Map<string, Link>) {

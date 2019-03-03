@@ -2,12 +2,12 @@ import * as React from 'react'
 import {connect} from 'react-redux';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
 
+import {loadLinkPreview, mutationsObserve} from '../actions';
+
 class LinkObserver extends React.Component<any, any> {
 
     componentDidMount() {
-        this.props.dispatch({
-            type: 'MUTATION_OBSERVER__OBSERVE'
-        });
+        this.props.mutationsObserve();
     }
 
     shouldComponentUpdate(nextProps:any) {
@@ -20,7 +20,7 @@ class LinkObserver extends React.Component<any, any> {
     render(): JSX.Element[] | null {
         console.log('RENDER: LinkObserver', this.props);
         return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
-            return <LinkPreviewPortal key={key} link={link} />
+            return <LinkPreviewPortal key={key} link={link} loadLinkPreview={this.props.loadLinkPreview} />
         }) : null;
     }
 
@@ -30,4 +30,7 @@ const mapStateToProps = (state: any, ownProps: any) => ({
     links: state.links
 })
 
-export default connect(mapStateToProps)(LinkObserver)
+export default connect(mapStateToProps, {
+    loadLinkPreview,
+    mutationsObserve
+})(LinkObserver)

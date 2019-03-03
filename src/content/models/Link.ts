@@ -2,11 +2,13 @@ export class Link {
     private element: HTMLLinkElement;
     private href: string;
     private id: string | null;
+    private description: string;
 
-    constructor(element: Element) {
+    constructor(element: Element, description: string = 'HELLO FROM MODEL') {
         this.element = element as HTMLLinkElement;
         this.id = this.findClosestProjectId(element);
         this.href = this.element.href;
+        this.description = description;
     }
 
     // TODO: get id from bullet href link
@@ -17,6 +19,10 @@ export class Link {
 
     public getId() {
         return this.id;
+    }
+
+    public setDescription(description: string) {
+        this.description = description;
     }
 
     public getElement() {
