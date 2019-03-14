@@ -1,13 +1,11 @@
-import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import reducer from './reducer';
+import { Store, applyMiddleware } from 'webext-redux';
 import mutationObserver from '../middleware';
 import httpMiddleware from '../middleware/httpMiddleware';
 
-const store = createStore(
-    reducer,
-    applyMiddleware(thunk, mutationObserver, httpMiddleware, logger)
-);
+const store = new Store();
+const middleware = [thunk, mutationObserver, httpMiddleware, logger];
+const storeWithMiddleware = applyMiddleware(store, ...middleware);
 
-export default store;
+export default storeWithMiddleware;

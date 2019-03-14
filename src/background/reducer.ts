@@ -1,9 +1,9 @@
-import { Links } from '../models/Links';
+import { Links } from './models/Links';
 import {
     LINK_PREVIEW_REQUEST,
     LINK_PREVIEW_SUCCESS,
     LINK_PREVIEW_FAILURE
-} from '../actions';
+} from '../content/actions';
 
 const reducer = (state = { links: Links.create([]) }, action: any): any => {
     console.log('action', action);

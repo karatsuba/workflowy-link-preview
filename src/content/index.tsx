@@ -4,9 +4,12 @@ import { Provider } from 'react-redux';
 import LinkObserver from './conteiners/LinkObserver';
 import store from './store';
 
+store.ready().then(() => {
+    initApp(store);
+});
 
-const initApp = () => {
-    // put creatin logic inside main component
+const initApp = (store: any) => {
+    // put creatin logic inside app component
     const root = document.getElementById('app') as HTMLElement;
     const container = document.createElement('div');
     root.appendChild(container);
@@ -17,5 +20,3 @@ const initApp = () => {
         container
     );
 };
-
-initApp();
