@@ -1,5 +1,4 @@
 import React from 'react'
-import {HTTP_ACTION} from '../middleware/httpMiddleware';
 import {
     LINK_PREVIEW_REQUEST,
     LINK_PREVIEW_SUCCESS,

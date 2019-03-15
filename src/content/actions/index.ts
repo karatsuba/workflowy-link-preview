@@ -1,4 +1,4 @@
-import { HTTP_ACTION } from '../middleware/httpMiddleware';
+import { HTTP_ACTION } from '../../background/middleware/httpMiddleware';
 
 export const LINK_PREVIEW_REQUEST = 'LINK_PREVIEW_REQUEST';
 export const LINK_PREVIEW_SUCCESS = 'LINK_PREVIEW_SUCCESS';

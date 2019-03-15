@@ -1,22 +1,16 @@
 // import {Parser} from './services/Parser';
 // Parser.create().parseURL('https://github.com/karatsuba').then(console.dir);
-
-import {createStore} from 'redux';
-import reducer from './reducer';
-// import rootReducer from './reducers';
-
+import {createStore, applyMiddleware} from 'redux';
 import {wrapStore} from 'webext-redux';
+import reducer from './reducer';
 
-// const reducer = (state: any, action: any) => {
-//     console.log('REDUCER REACTS FROM BACKGROUND');
-//     return state;
-// }
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import mutationObserver from './middleware';
+import httpMiddleware from './middleware/httpMiddleware';
 
-const store = createStore(reducer, {});
+const middleware = [logger];
 
-wrapStore(store, {
-    serializer: (payload: any) => {
-        console.log(payload);
-        return payload;
-    }
-});
+const store = createStore(reducer, {}, applyMiddleware(...middleware));
+
+wrapStore(store);

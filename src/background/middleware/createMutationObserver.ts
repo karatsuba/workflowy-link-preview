@@ -47,10 +47,10 @@ export default (dispatch: Dispatch) => {
                     // CONTENT LINK WAS ADDED
                     if(findContentLinks(mutation.addedNodes).length > 0) {
                         // GET LINKS AND DISPATCH ADD ACTION
-                        const addedContentLinks = findContentLinks(mutation.addedNodes).map(serialize)
+                        const addedContentLinks = findContentLinks(mutation.addedNodes)
                         dispatch({
                             type: 'ADD_LINK',
-                            payload: addedContentLinks
+                            payload: addedContentLinks.map(serialize)
                         });
                     }
                 }
@@ -60,10 +60,10 @@ export default (dispatch: Dispatch) => {
                     // CONTENT LINK WAS ADDED
                     if(filterContentLinks(mutation.addedNodes).filter(isConnectedLink).length > 0) {
                         // GET LINKS AND DISPATCH ADD ACTION
-                        const addedContentLinks = filterContentLinks(mutation.addedNodes).filter(isConnectedLink).map(serialize)
+                        const addedContentLinks = filterContentLinks(mutation.addedNodes).filter(isConnectedLink)
                         dispatch({
                             type: 'ADD_LINK',
-                            payload: addedContentLinks
+                            payload: addedContentLinks.map(serialize)
                         });
                     }
                     
