@@ -7,8 +7,7 @@ import {loadLinkPreview, mutationsObserve} from '../actions';
 class LinkObserver extends React.Component<any, any> {
 
     componentDidMount() {
-        console.log('mutationsObserve');
-        this.props.mutationsObserve();
+        // this.props.mutationsObserve();
     }
 
     shouldComponentUpdate(nextProps:any) {
