@@ -34,11 +34,9 @@ const mapStateToProps = (state: any, ownProps: any) => ({
     links: state.links
 })
 
-// const mapDispatchToProps = (dispatch: any) => bindActionCreators({loadLinkPreview, mutationsObserve}, dispatch);
-
 const mutationsObserve = () => { 
     return {
-        type: 'ALIAS@MUTATION_OBSERVER__OBSERVE'
+        type: 'MUTATION_OBSERVER__OBSERVE'
     }
 };
 

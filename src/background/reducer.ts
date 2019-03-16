@@ -6,8 +6,6 @@ import {
 } from '../content/actions';
 
 const reducer = (state = { links: Links.create([]) }, action: any): any => {
-    console.log('action', action);
-
     switch (action.type) {
         case 'ADD_LINK':
             return {

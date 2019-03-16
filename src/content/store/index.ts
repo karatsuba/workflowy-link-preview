@@ -1,6 +1,7 @@
-import { Store } from 'webext-redux';
+import { Store, applyMiddleware } from 'webext-redux';
+import mutationObserver from '../middleware';
 
 const store = new Store();
 
-export default store;
+export default applyMiddleware(store, mutationObserver);
 
