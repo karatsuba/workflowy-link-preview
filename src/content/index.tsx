@@ -12,12 +12,8 @@ const initApp = (store: any) => {
     // put creatin logic inside app component
     const root = document.getElementById('app') as HTMLElement;
     const container = document.createElement('div');
-
-    store.dispatch({
-        type: 'TEST_ALIAS'
-    })
-
     root.appendChild(container);
+    
     ReactDOM.render(
         <Provider store={store}>
             <LinkObserver />

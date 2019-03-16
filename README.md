@@ -2,6 +2,14 @@ Workflowy link preview
 
 ---
 
+DEV INFO:
+
+mutation observer middleware used on content script proxy store
+
+logger, thunk, httpMiddleware used on background script store
+
+---
+
 TODO:
 
 - configure eslint (https://javascriptplayground.com/typescript-eslint/)
@@ -13,6 +21,10 @@ TODO:
 - ~~remove image preview if node was deleted~~
 
 - improve components render performance (don't rerender twice, etc)
+
+- connect content, background and popup scripts with redux store
+
+- add basic on/off/clear popup actions
 
 - move Mutation Observer middleware to separate folder
 

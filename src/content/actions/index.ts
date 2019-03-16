@@ -16,13 +16,15 @@ const fetchLinkPreview = (payload: any) => ({
 });
 
 export const loadLinkPreview = (payload: any) => (dispatch: any) => {
-    console.log('loadLinkPreview ACTION');
     return dispatch(fetchLinkPreview(payload));
 };
 
 
-export const mutationsObserve = () => (dispatch: any) => {
-    return dispatch({
-        type: 'MUTATION_OBSERVER__OBSERVE'
-    });
+export const mutationsObserve = () => { 
+    return function(dispatch: any) {
+        console.log('GOING TO DISPATCH MUTATION_OBSERVER__OBSERVE', dispatch);
+        return dispatch({
+            type: 'MUTATION_OBSERVER__OBSERVE'
+        });
+    }
 };

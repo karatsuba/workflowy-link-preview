@@ -1,9 +1,4 @@
 import React from 'react'
-import {
-    LINK_PREVIEW_REQUEST,
-    LINK_PREVIEW_SUCCESS,
-    LINK_PREVIEW_FAILURE
-} from '../actions';
 
 class LinkPreview extends React.Component<any, any> {
 
