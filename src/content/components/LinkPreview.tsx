@@ -12,7 +12,7 @@ class LinkPreview extends React.Component<any, any> {
 
     render(): JSX.Element {
         // {this.props.link.description}
-        // console.log('RENDER: LinkPreview', this);
+        console.log('RENDER: LinkPreview', this);
         return (<div>
             HELLO HERE
         </div>)
