@@ -20,12 +20,12 @@ class LinkObserver extends React.Component<any, any> {
 
     render(): JSX.Element[] | null {
         console.log('RENDER: LinkObserver', this.props);
-        if(!this.props.links) {
+        // if(!this.props.links) {
             return null;
-        }
-        return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
-            return <LinkPreviewPortal key={key} link={link} loadLinkPreview={this.props.loadLinkPreview} />
-        }) : null;
+        // }
+        // return this.props.links.getSize() ? [... this.props.links.getLinks()].map( ([key, link]) => {
+            // return <LinkPreviewPortal key={key} link={link} loadLinkPreview={this.props.loadLinkPreview} />
+        // }) : null;
     }
 
 }

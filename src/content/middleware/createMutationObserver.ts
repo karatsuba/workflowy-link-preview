@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 const serializer = new XMLSerializer();
 
-const serialize = (node: Node) => serializer.serializeToString(node);
+const serialize = (element: Element) => serializer.serializeToString(element);
 
 const filterContentLinks = (nodes: NodeList) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
@@ -28,7 +28,15 @@ const findContentLinks = (nodes: NodeList | Element[]) => {
 const findClosestProjectId = (element: Element) => {
     const project = element.closest('div.project');
     return project ? project.getAttribute('projectid') : null;
-}
+};
+
+const buildPayload = (element: Element) => {
+    return {
+        id: findClosestProjectId(element),
+        href: (element as HTMLLinkElement).href,
+        element: serialize(element)
+    };
+};
 
 export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
@@ -50,7 +58,7 @@ export default (dispatch: Dispatch) => {
                         const addedContentLinks = findContentLinks(mutation.addedNodes)
                         dispatch({
                             type: 'ADD_LINK',
-                            payload: addedContentLinks.map(serialize)
+                            payload: addedContentLinks.map(buildPayload)
                         });
                     }
                 }
@@ -63,7 +71,7 @@ export default (dispatch: Dispatch) => {
                         const addedContentLinks = filterContentLinks(mutation.addedNodes).filter(isConnectedLink)
                         dispatch({
                             type: 'ADD_LINK',
-                            payload: addedContentLinks.map(serialize)
+                            payload: addedContentLinks.map(buildPayload)
                         });
                     }
                     

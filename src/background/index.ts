@@ -27,6 +27,11 @@ const aliases = {
 
 const middleware = [alias(aliases), logger, thunk];
 
-const store = createStore(reducer, {}, applyMiddleware(...middleware));
+const store = createStore(reducer, undefined, applyMiddleware(...middleware));
 
-wrapStore(store);
+wrapStore(store, {
+    // serializer: (payload: any) => {
+    //     console.log('PAYLOAD', payload);
+    //     return payload;
+    // }
+});
