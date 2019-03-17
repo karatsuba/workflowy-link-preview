@@ -6,32 +6,18 @@ import reducer from './reducer';
 
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-// import mutationObserver from '../content/middleware';
 import httpMiddleware from './middleware/httpMiddleware';
 
-// TODO: hook http alias action here
 const aliases = {
-    // this key is the name of the action to proxy, the value is the action
-    // creator that gets executed when the proxied action is received in the
-    // 'MUTATION_OBSERVER__OBSERVE' : (action: any) => {
-    //     // console.log('MUTATION_OBSERVER__OBSERVE', action);
-    //     return (dispatch: any) => {
-    //         // console.log('I DONT WANT TO DISPATCH ANYTHING');
-    //         // return
-    //         // dispatch({
-    //         //     type: 'ALIAS@MUTATION_OBSERVER__OBSERVE'
-    //         // })
-    //     };
-    // }
+    'HTTP_REQUEST_ALIAS': (action: any) => {
+        return (dispatch:any) => {
+            dispatch(action.payload);
+        }
+    }
 };
 
-const middleware = [alias(aliases), logger, thunk];
+const middleware = [alias(aliases), thunk, httpMiddleware, logger];
 
 const store = createStore(reducer, undefined, applyMiddleware(...middleware));
 
-wrapStore(store, {
-    // serializer: (payload: any) => {
-    //     console.log('PAYLOAD', payload);
-    //     return payload;
-    // }
-});
+wrapStore(store);

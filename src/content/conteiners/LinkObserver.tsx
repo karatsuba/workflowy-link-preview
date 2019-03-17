@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
 
 // import {loadLinkPreview, mutationsObserve} from '../actions';
+import actionCreators from '../actions';
 
 class LinkObserver extends React.Component<any, any> {
 
@@ -10,6 +11,7 @@ class LinkObserver extends React.Component<any, any> {
         this.props.mutationsObserve();
     }
 
+    // TODO: consider react pure component
     // shouldComponentUpdate(nextProps:any) {
     //     // compare ids
     //     console.log(JSON.stringify(this.props.links));
@@ -34,12 +36,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({
     links: state.links
 })
 
-const mutationsObserve = () => { 
-    return {
-        type: 'MUTATION_OBSERVER__OBSERVE'
-    }
-};
-
-export default connect(mapStateToProps, {
-    mutationsObserve
-})(LinkObserver)
+export default connect(mapStateToProps, actionCreators)(LinkObserver)
