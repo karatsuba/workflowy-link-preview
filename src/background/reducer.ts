@@ -12,13 +12,13 @@ const initState = {
 const reducer = (state = initState, action: any): any => {
     switch (action.type) {
         case 'ADD_LINK':
-            const contentLinks = action.payload.map((element: any) => {
-
-            });
-
-            return {
-                // links: Links.merge(state.links, action.payload)
-            };
+            const links = action.payload.reduce((links: any, link: any) => {
+                return {
+                    [link.id]: link,
+                    ...links
+                }
+            }, state.links);
+            return { links };
         case 'REMOVE_LINK':
             return {
                 // links: state.links.remove(action.payload)
@@ -50,7 +50,6 @@ const reducer = (state = initState, action: any): any => {
         //         links: _links
         //     }
         default:
-            console.log('RETURN STATE', state);
             return state;
     }
 };
