@@ -1,8 +1,9 @@
 import { Action, MiddlewareAPI, Dispatch } from 'redux';
+import { Parser}  from '../services/Parser';
 
 export const HTTP_ACTION = 'HTTP ACTION';
 
-let timeout: number | null = null;
+const parser = Parser.create();
 
 const httpMiddleware = (store: MiddlewareAPI) => (next:Dispatch) => (action: any) => {
     if (!action[HTTP_ACTION]) {
@@ -21,20 +22,7 @@ const httpMiddleware = (store: MiddlewareAPI) => (next:Dispatch) => (action: any
         }
     });
 
-    if(timeout) {
-        clearTimeout(timeout);
-    }
-
-    timeout = setTimeout(() => {
-        console.log('API CALL MOCK FOR', payload);
-        next({
-            type: successType,
-            payload: {
-                ...payload,
-                description: 'HELLO FROM REDUX'
-            }
-        })
-    }, 2000);
+    // parser.parseURL(payload.href).then(console.dir);
 
     // fetch(actionInfo.endpoint, fetchOptions)
     //     .then(response => response.json())

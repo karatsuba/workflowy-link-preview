@@ -1,5 +1,3 @@
-// import {Parser} from './services/Parser';
-// Parser.create().parseURL('https://github.com/karatsuba').then(console.dir);
 import {createStore, applyMiddleware} from 'redux';
 import {wrapStore, alias} from 'webext-redux';
 import reducer from './reducer';
