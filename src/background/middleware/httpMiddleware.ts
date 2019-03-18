@@ -22,18 +22,23 @@ const httpMiddleware = (store: MiddlewareAPI) => (next:Dispatch) => (action: any
         }
     });
 
-    // parser.parseURL(payload.href).then(console.dir);
-
-    // fetch(actionInfo.endpoint, fetchOptions)
-    //     .then(response => response.json())
-    //     .then(data => next({
-    //         type: actionInfo.type + "_RECEIVED",
-    //         payload: data
-    //     }))
-    //     .catch(error => next({
-    //         type: actionInfo.type + "_FAILED",
-    //         payload: error
-    //     }));
+    parser.parseURL(payload.href)
+        .then(data => {
+            return next({
+                type: successType,
+                payload: {
+                    ...data
+                }
+            });
+        })
+        .catch(error => {
+            return next({
+                type: failureType,
+                payload: {
+                    ...error
+                }
+            });
+        })
 }
 
 export default httpMiddleware;
