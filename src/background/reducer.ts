@@ -1,10 +1,8 @@
-import { Links } from './models/Links';
 import {
     LINK_PREVIEW_REQUEST,
     LINK_PREVIEW_SUCCESS,
     LINK_PREVIEW_FAILURE
 } from '../content/actions';
-import { Link } from './models/Link';
 
 const initState = {
     links: {}
@@ -21,7 +19,7 @@ const reducer = (state = initState, action: any): any => {
             }, state.links);
             return { links };
         }
-        
+
         case 'REMOVE_LINK': {
             const links = action.payload.reduce((links: any, id: any) => {
                 return Object.keys(links)
