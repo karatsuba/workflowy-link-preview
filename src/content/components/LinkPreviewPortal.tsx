@@ -29,9 +29,9 @@ class LinkPreviewPortal extends React.Component<any, any> {
     }
 
     // rerender only id is changed
-    shouldComponentUpdate(nextProps: any) {
-        return this.props.id !== nextProps.id;
-    }
+    // shouldComponentUpdate(nextProps: any) {
+        // return this.props.id !== nextProps.id;
+    // }
 
     render(): JSX.Element {
         return ReactDOM.createPortal(<LinkPreview {...this.props} />, this.container);

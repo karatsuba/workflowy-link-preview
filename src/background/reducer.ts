@@ -4,6 +4,7 @@ import {
     LINK_PREVIEW_SUCCESS,
     LINK_PREVIEW_FAILURE
 } from '../content/actions';
+import { Link } from './models/Link';
 
 const initState = {
     links: {}
@@ -11,7 +12,7 @@ const initState = {
 
 const reducer = (state = initState, action: any): any => {
     switch (action.type) {
-        case 'ADD_LINK':
+        case 'ADD_LINK': {
             const links = action.payload.reduce((links: any, link: any) => {
                 return {
                     [link.id]: link,
@@ -19,36 +20,48 @@ const reducer = (state = initState, action: any): any => {
                 }
             }, state.links);
             return { links };
-        case 'REMOVE_LINK':
+        }
+        
+        case 'REMOVE_LINK': {
+            const links = action.payload.reduce((links: any, id: any) => {
+                return Object.keys(links)
+                    .filter(linkId => linkId !== id)
+                    .reduce((result, linkId) => {
+                        result[linkId] = links[linkId];
+                        return result;
+                    }, {} as any);
+            }, state.links);
+            return { links };
+        }
+
+        case LINK_PREVIEW_REQUEST: {
+            const { id } = action.payload;
+            const link = (state.links as any)[id];
             return {
-                // links: state.links.remove(action.payload)
-            };
-        // case LINK_PREVIEW_REQUEST:            
-        //     const selectedId = action.payload.id;
-        //     const links = [...state.links.getLinks()].map(([id, link]) => {
-        //         if (selectedId === id) {
-        //             link.setDescription(action.payload.description);
-        //         }
-        //         return link;
-        //     }).reduce((result, link) => {
-        //         return result.setLink(link);
-        //     }, Links.create([]));
-        //     return {
-        //         links
-        //     }
-        // case LINK_PREVIEW_SUCCESS:
-        //     const _selectedId = action.payload.id;
-        //     const _links = [...state.links.getLinks()].map(([id, link]) => {
-        //         if (_selectedId === id) {
-        //             link.setDescription(action.payload.description);
-        //         }
-        //         return link;
-        //     }).reduce((result, link) => {
-        //         return result.setLink(link);
-        //     }, Links.create([]));
-        //     return {
-        //         links: _links
-        //     }
+                links: {
+                    ...state.links,
+                    [link.id]: {
+                        ...link,
+                        isFetching: true
+                    }
+                }
+            }
+        }
+
+        case LINK_PREVIEW_SUCCESS: {
+            const { id, ...data } = action.payload;
+            const link = (state.links as any)[id];
+            return {
+                links: {
+                    ...state.links,
+                    [link.id]: {
+                        ...link,
+                        ...data,
+                        isFetching: false
+                    }
+                }
+            }
+        }
         default:
             return state;
     }

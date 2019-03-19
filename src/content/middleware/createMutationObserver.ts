@@ -33,7 +33,7 @@ const findClosestProjectId = (element: Element) => {
 const buildPayload = (element: Element) => {
     return {
         id: findClosestProjectId(element),
-        href: (element as HTMLLinkElement).href
+        url: (element as HTMLLinkElement).href
     };
 };
 
