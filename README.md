@@ -20,9 +20,9 @@ TODO:
 
 - ~~remove image preview if node was deleted~~
 
-- improve components render performance (don't rerender twice, etc)
+- ~~connect content, background and popup scripts with redux store~~
 
-- connect content, background and popup scripts with redux store
+- improve components render performance (don't rerender twice, etc)
 
 - add basic on/off/clear popup actions
 

@@ -1,8 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
-
-// import {loadLinkPreview, mutationsObserve} from '../actions';
 import actionCreators from '../actions';
 
 class LinkObserver extends React.Component<any, any> {
