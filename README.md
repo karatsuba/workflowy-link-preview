@@ -22,6 +22,8 @@ TODO:
 
 - ~~connect content, background and popup scripts with redux store~~
 
+- add suport for simple image link (check response contentType)
+
 - improve components render performance (don't rerender twice, etc)
 
 - add basic on/off/clear popup actions
