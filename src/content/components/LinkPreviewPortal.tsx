@@ -12,28 +12,27 @@ class LinkPreviewPortal extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        // console.log('GOINT TO APPEND PREVIEW ON LINK PARENT');
-        this.parentContainer = document.querySelectorAll(`[projectid='${this.props.id}'] > .name`).item(0);
-        if(this.parentContainer){
-            // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
-            this.parentContainer.appendChild(this.container);
-        }
+        // TODO: fix reload bug
+        setTimeout(() => {
+            this.parentContainer = document.querySelectorAll(`[projectid='${this.props.id}'] > .name`).item(0);
+            console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
+            if(this.parentContainer){
+                // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
+                this.parentContainer.appendChild(this.container);
+            }
+        }, 2200);
     }
 
     componentWillUnmount() {
-        // console.log('GOINT TO REMOVE PREVIEW ON LINK PARENT');
+        console.log('GOINT TO REMOVE PREVIEW ON LINK PARENT');
         if(this.parentContainer){
             // console.log('PREVIEW LINK WAS REMOVED ON PARENT');
             this.parentContainer.removeChild(this.container);
         }
     }
 
-    // rerender only id is changed
-    // shouldComponentUpdate(nextProps: any) {
-        // return this.props.id !== nextProps.id;
-    // }
-
     render(): JSX.Element {
+        // console.log('RENDER LinkPreviewPortal', this.props);
         return ReactDOM.createPortal(<LinkPreview {...this.props} />, this.container);
     }
 

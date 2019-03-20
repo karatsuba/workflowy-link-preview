@@ -31,7 +31,8 @@ class LinkObserver extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-    links: state.links
+    links: state.links,
+    observingMutations: state.observingMutations
 })
 
 export default connect(mapStateToProps, actionCreators)(LinkObserver)

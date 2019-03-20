@@ -5,7 +5,8 @@ import {
 } from '../content/actions';
 
 const initState = {
-    links: {}
+    links: {},
+    observingMutations: false
 };
 
 const reducer = (state = initState, action: any): any => {
@@ -17,7 +18,10 @@ const reducer = (state = initState, action: any): any => {
                     ...links
                 }
             }, state.links);
-            return { links };
+            return { 
+                ...state,
+                links
+            };
         }
 
         case 'REMOVE_LINK': {
@@ -29,13 +33,17 @@ const reducer = (state = initState, action: any): any => {
                         return result;
                     }, {} as any);
             }, state.links);
-            return { links };
+            return { 
+                ...state,
+                links
+            };
         }
 
         case LINK_PREVIEW_REQUEST: {
             const { id } = action.payload;
             const link = (state.links as any)[id];
             return {
+                ...state,
                 links: {
                     ...state.links,
                     [link.id]: {
@@ -50,6 +58,7 @@ const reducer = (state = initState, action: any): any => {
             const { id, ...data } = action.payload;
             const link = (state.links as any)[id];
             return {
+                ...state,
                 links: {
                     ...state.links,
                     [link.id]: {
@@ -60,6 +69,15 @@ const reducer = (state = initState, action: any): any => {
                 }
             }
         }
+
+        case 'MUTATION_OBSERVER__OBSERVE': {
+            const { observingMutations }  = state;
+            return {
+                ...state,
+                observingMutations: (observingMutations ? observingMutations : !observingMutations)
+            };
+        }
+
         default:
             return state;
     }
