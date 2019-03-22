@@ -13,14 +13,12 @@ class LinkPreviewPortal extends React.Component<any, any> {
 
     componentDidMount() {
         // TODO: fix reload bug
-        setTimeout(() => {
-            this.parentContainer = document.querySelectorAll(`[projectid='${this.props.id}'] > .name`).item(0);
-            console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
-            if(this.parentContainer){
-                // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
-                this.parentContainer.appendChild(this.container);
-            }
-        }, 2200);
+        this.parentContainer = document.querySelectorAll(`[projectid='${this.props.id}'] > .name`).item(0);
+        console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
+        if(this.parentContainer){
+            // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
+            this.parentContainer.appendChild(this.container);
+        }
     }
 
     componentWillUnmount() {

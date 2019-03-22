@@ -9,14 +9,6 @@ class LinkObserver extends React.Component<any, any> {
         this.props.mutationsObserve();
     }
 
-    // TODO: consider react pure component
-    // shouldComponentUpdate(nextProps:any) {
-    //     // compare ids
-    //     console.log(JSON.stringify(this.props.links));
-    //     console.log(JSON.stringify(nextProps.links));
-    //     return true;
-    // }
-
     render(): JSX.Element[] | null {
         // console.log('RENDER: LinkObserver', this.props);
         if(!this.props.links) {

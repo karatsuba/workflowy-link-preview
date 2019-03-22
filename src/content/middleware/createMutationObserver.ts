@@ -1,9 +1,5 @@
 import { Dispatch } from 'redux';
 
-const serializer = new XMLSerializer();
-
-const serialize = (element: Element) => serializer.serializeToString(element);
-
 const filterContentLinks = (nodes: NodeList) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
     return Array.from(nodes).reduce((result, node) => {
