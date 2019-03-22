@@ -9,7 +9,7 @@ const createMiddleware = (): Middleware => {
         // const handler = getHandler(reduxWebsocket, action.type);
         // handler(store, action);
         if(action.type == 'MUTATION_OBSERVER__OBSERVE') {
-            console.log('GOING TO OBSERVE MUTATITIONS');
+            // console.log('GOING TO OBSERVE MUTATITIONS');
             reduxMutationObserver.observe(store)
         }
 

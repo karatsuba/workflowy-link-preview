@@ -4,9 +4,14 @@ import { Provider } from 'react-redux';
 import LinkObserver from './conteiners/LinkObserver';
 import store from './store';
 
-store.ready().then(() => {
-    initApp(store);
-});
+const cleanUp = ({ state, dispatch }: any) => {
+    const { links } = state;
+    if (Object.values(links).length > 0) {
+        return dispatch({
+            type: 'CLEAR_LINKS'
+        });
+    }
+}
 
 const initApp = (store: any) => {
     ReactDOM.render(
@@ -14,5 +19,9 @@ const initApp = (store: any) => {
             <LinkObserver />
         </Provider>,
         document.createElement('div')
-    );
+    )
 };
+
+store.ready()
+    .then(() => cleanUp(store))
+    .then(() => initApp(store));

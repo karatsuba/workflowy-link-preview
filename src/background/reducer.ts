@@ -39,6 +39,13 @@ const reducer = (state = initState, action: any): any => {
             };
         }
 
+        case 'CLEAR_LINKS': {
+            return { 
+                ...state,
+                links: {}
+            };
+        }
+
         case LINK_PREVIEW_REQUEST: {
             const { id } = action.payload;
             const link = (state.links as any)[id];
