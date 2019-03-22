@@ -13,13 +13,15 @@ class LinkPreview extends React.Component<any, any> {
             return <div>Loading...</div>
         }
         
-        return (<div>
-            <div className='image'>
-                <img src={image} alt="" style={{maxWidth: '200px'}}/>
+        return (
+            <div className='link-preview' style={{userSelect: 'text'}}>
+                <div className='image'>
+                    <img src={image} alt="" style={{maxWidth: '200px'}}/>
+                </div>
+                <h3>{title}</h3>
+                <p>{description}</p>
             </div>
-            <h3>{title}</h3>
-            <span>{description}</span>
-        </div>)
+        )
     }
 }
 
