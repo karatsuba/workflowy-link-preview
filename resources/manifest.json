@@ -8,15 +8,13 @@
     },
     "content_scripts": [
         {
-          "matches": [
-            "*://workflowy.com/*"
-          ],
-          "js": ["content.js"]
+            "matches": ["*://workflowy.com/*"],
+            "js": ["content.js"]
         }
     ],
-    "permissions": [
-        "http://*/*",
-        "https://*/*"
-    ],
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": ["http://*/*", "https://*/*", "activeTab"],
     "manifest_version": 2
 }
