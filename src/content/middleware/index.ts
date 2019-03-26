@@ -13,6 +13,11 @@ const createMiddleware = (): Middleware => {
             reduxMutationObserver.observe(store)
         }
 
+        if(action.type == 'MUTATION_OBSERVER__DISCONNECT') {
+            console.log('MUTATION_OBSERVER__DISCONNECT');
+            reduxMutationObserver.disconnect();
+        }
+
         return next(action);
     };
 };
