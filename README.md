@@ -28,6 +28,8 @@ TODO:
 
 - add basic on/off/clear popup actions
 
+- cache requests for the same url
+
 - move Mutation Observer middleware to separate folder
 
 - consider creating Redux Mutation Observer package and load it to npm, use in the app after
