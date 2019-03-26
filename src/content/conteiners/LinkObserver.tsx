@@ -20,6 +20,13 @@ class LinkObserver extends React.Component<any, any> {
         }) : null
     }
 
+    // TODO: check if it's OK, to dispatch in this lifecycle method
+    componentWillUpdate(nextProps: any) {
+        if(!nextProps.observingMutations && nextProps.observingMutations !== this.props.observingMutations) {
+            console.log('DISABLE');
+        }
+    }
+
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({

@@ -4,10 +4,6 @@ import actionCreators from '../actions';
 
 class App extends React.Component<any, any> {
 
-    handleMutationObserveToggle = () => {
-        this.props.mutationsObserveToggle(this.props.observingMutations);
-    }
-
     render(): JSX.Element | null {
         return (
             <div style={{width: '250px'}}>
@@ -15,10 +11,11 @@ class App extends React.Component<any, any> {
                 <br/>
                 <p>Extension is {this.props.observingMutations ? 'enabled' : 'disabled'}.</p>
                 <br/>
-                <button onClick={this.handleMutationObserveToggle}>Toggle observing</button>
+                <button onClick={this.props.mutationsObserveToggle}>Toggle observing</button>
             </div>
         );
     }
+    
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({

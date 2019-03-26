@@ -85,6 +85,14 @@ const reducer = (state = initState, action: any): any => {
             };
         }
 
+        case 'MUTATION_OBSERVER__TOGGLE': {
+            const { observingMutations }  = state;
+            return {
+                ...state,
+                observingMutations: !observingMutations
+            };
+        }
+
         default:
             return state;
     }
