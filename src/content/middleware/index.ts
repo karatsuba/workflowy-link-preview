@@ -8,13 +8,15 @@ const createMiddleware = (): Middleware => {
     return (store: MiddlewareAPI) => next => (action: Action) => {
         // const handler = getHandler(reduxWebsocket, action.type);
         // handler(store, action);
-        if(action.type == 'MUTATION_OBSERVER__OBSERVE') {
+        const { observingMutations } = store.getState();
+
+        if(action.type == 'MUTATION_OBSERVER__OBSERVE' && !observingMutations) {
             // console.log('GOING TO OBSERVE MUTATITIONS');
             reduxMutationObserver.observe(store)
         }
 
         if(action.type == 'MUTATION_OBSERVER__DISCONNECT') {
-            console.log('MUTATION_OBSERVER__DISCONNECT');
+            // console.log('MUTATION_OBSERVER__DISCONNECT');
             reduxMutationObserver.disconnect();
         }
 
