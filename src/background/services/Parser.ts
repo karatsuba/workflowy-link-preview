@@ -1,7 +1,7 @@
 export class Parser {
     private domParser = new DOMParser();
 
-    parseMetaTags(elements: Element[]) {
+    parseMetaTags(elements: HTMLMetaElement[]) {
         return elements.reduce((result: any, element: Element) => {
             return Object.keys(result).filter(prop => {
                 return `og:${prop}` === element.getAttribute('property')
@@ -22,11 +22,31 @@ export class Parser {
         return Array.from(doc.getElementsByTagName('meta'));
     }
 
+    parseHTML(html: string) {
+        const elements = this.parseString(html);
+        return this.parseMetaTags(elements);
+    }
+
+    parseImage(url:string) {
+        return {
+            url,
+            image: url
+        }
+    }
+
+
     parseURL(url: string) {
         return fetch(url)
-            .then(response => response.text())
-            .then(this.parseString.bind(this))
-            .then(this.parseMetaTags)
+            .then(response => {
+                const contentType: string = response.headers.get("Content-Type")!;
+
+                if (contentType.includes('image')) {
+                    return this.parseImage(url)
+                } else {
+                    return response.text().then(this.parseHTML.bind(this));
+                }
+
+            })
             .catch(console.error);
     }
 
