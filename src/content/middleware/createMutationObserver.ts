@@ -1,5 +1,12 @@
 import { Dispatch } from 'redux';
 
+const MARKDOWN_LINK_REGEX = /\[(.*?)\]\((.*?)\)/;
+
+const matchLink = (element: Element) => {
+    const matches = element.textContent!.match(MARKDOWN_LINK_REGEX);
+    console.log(matches);
+}
+
 const filterContentLinks = (nodes: NodeList) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
     return Array.from(nodes).reduce((result, node) => {
@@ -64,6 +71,7 @@ export default (dispatch: Dispatch) => {
                     if(filterContentLinks(mutation.addedNodes).filter(isConnectedLink).length > 0) {
                         // GET LINKS AND DISPATCH ADD ACTION
                         const addedContentLinks = filterContentLinks(mutation.addedNodes).filter(isConnectedLink)
+                        matchLink(mutation.target);
                         dispatch({
                             type: 'ADD_LINK',
                             payload: addedContentLinks.map(buildPayload)
