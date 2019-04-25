@@ -1,23 +1,26 @@
 import { Dispatch } from 'redux';
 
-const MARKDOWN_LINK_REGEX = /\[(.*?)\]\((.*?)\)/;
+const filterMarkdownLinks = (element: Element): string[] => {
+    const MARKDOWN_LINK_REGEX = /\[(.*?)\]\((.*?)\)/;
 
-const matchLink = (element: Element) => {
-    const matches = element.textContent!.match(MARKDOWN_LINK_REGEX);
-    console.log(matches);
+    const {textContent = ''} = element;
+    const matches = textContent!.match(MARKDOWN_LINK_REGEX) || [];
+    const [fullMatch, firstGroup, secondGroup] = matches;
+
+    return secondGroup ? [secondGroup] : [];
 }
 
 const filterContentLinks = (nodes: NodeList) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
     return Array.from(nodes).reduce((result, node) => {
-        if (node instanceof HTMLElement && node.classList.contains(CONTENT_LINK_CLASS_NAME)) {
+        if (node instanceof HTMLAnchorElement && node.classList.contains(CONTENT_LINK_CLASS_NAME)) {
             return [...result, node];
         }
         return result;
-    }, [] as Element[]);
+    }, [] as HTMLAnchorElement[]);
 };
 
-const isConnectedLink = (element: Element) => element.isConnected;
+const isConnectedElement = (element: HTMLAnchorElement) => element.isConnected;
 
 const findContentLinks = (nodes: NodeList | Element[]) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
@@ -33,12 +36,12 @@ const findClosestProjectId = (element: Element) => {
     return project ? project.getAttribute('projectid') : null;
 };
 
-const buildPayload = (element: Element) => {
-    return {
-        id: findClosestProjectId(element),
-        url: (element as HTMLLinkElement).href
-    };
-};
+const buildMarkdownLinkPayload = (element: Element) => (url: string) => ({
+    id: findClosestProjectId(element),
+    url
+});
+
+const getParentElement = (element:Element) => element.parentElement!;
 
 export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
@@ -57,10 +60,14 @@ export default (dispatch: Dispatch) => {
                     // CONTENT LINK WAS ADDED
                     if(findContentLinks(mutation.addedNodes).length > 0) {
                         // GET LINKS AND DISPATCH ADD ACTION
-                        const addedContentLinks = findContentLinks(mutation.addedNodes)
+                        console.log(mutation);
+                        const addedContentLinks = findContentLinks(mutation.addedNodes).map(getParentElement);
+                        const [addedLink] = addedContentLinks;
+                        const addedMarkdownLinks = filterMarkdownLinks(addedLink);
+
                         dispatch({
                             type: 'ADD_LINK',
-                            payload: addedContentLinks.map(buildPayload)
+                            payload: addedMarkdownLinks.map(buildMarkdownLinkPayload(addedLink))
                         });
                     }
                 }
@@ -68,13 +75,15 @@ export default (dispatch: Dispatch) => {
                 // CONTENT DIV WAS EDITED
                 if(mutation.target instanceof HTMLElement && mutation.target.classList.contains('content')) {
                     // CONTENT LINK WAS ADDED
-                    if(filterContentLinks(mutation.addedNodes).filter(isConnectedLink).length > 0) {
+                    if(filterContentLinks(mutation.addedNodes).filter(isConnectedElement).length > 0) {
                         // GET LINKS AND DISPATCH ADD ACTION
-                        const addedContentLinks = filterContentLinks(mutation.addedNodes).filter(isConnectedLink)
-                        matchLink(mutation.target);
+                        
+                        // get only markdown links here
+                        const addedMarkdownLinks = filterMarkdownLinks(mutation.target);
+                        
                         dispatch({
                             type: 'ADD_LINK',
-                            payload: addedContentLinks.map(buildPayload)
+                            payload: addedMarkdownLinks.map(buildMarkdownLinkPayload(mutation.target))
                         });
                     }
                     

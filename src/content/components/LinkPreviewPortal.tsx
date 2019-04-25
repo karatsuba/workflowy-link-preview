@@ -31,7 +31,9 @@ class LinkPreviewPortal extends React.Component<any, any> {
 
     render(): JSX.Element {
         // console.log('RENDER LinkPreviewPortal', this.props);
-        return ReactDOM.createPortal(<LinkPreview {...this.props} />, this.container);
+        return ReactDOM.createPortal(
+            <LinkPreview {...this.props} />,
+            this.container);
     }
 
 }

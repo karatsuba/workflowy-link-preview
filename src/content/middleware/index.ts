@@ -10,7 +10,7 @@ const createMiddleware = (): Middleware => {
         // handler(store, action);
         const { observingMutations } = store.getState();
 
-        if(action.type == 'MUTATION_OBSERVER__OBSERVE' && !observingMutations) {
+        if(action.type == 'MUTATION_OBSERVER__OBSERVE') {
             // console.log('GOING TO OBSERVE MUTATITIONS');
             reduxMutationObserver.observe(store)
         }

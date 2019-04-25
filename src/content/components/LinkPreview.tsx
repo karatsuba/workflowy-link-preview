@@ -9,6 +9,7 @@ class LinkPreview extends React.Component<any, any> {
 
     render(): JSX.Element {
         const { isFetching, title, image, description } = this.props;
+        
         if (isFetching) {
             return <div>Loading...</div>
         }

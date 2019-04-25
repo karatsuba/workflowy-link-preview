@@ -16,6 +16,6 @@ const aliases = {
 
 const middleware = [alias(aliases), thunk, httpMiddleware, logger];
 
-const store = createStore(reducer, undefined, applyMiddleware(...middleware));
+const store = createStore(reducer, {}, applyMiddleware(...middleware));
 
 wrapStore(store);

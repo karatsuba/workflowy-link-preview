@@ -20,17 +20,17 @@ class LinkObserver extends React.Component<any, any> {
             null;
     }
 
-    componentDidUpdate(prevProps: any) {
-        if(!this.props.observingMutations) {
-            // console.log('LinkObserver: mutationsDisconnect')
-            this.props.mutationsDisconnect();
-        }
-
-        if(this.props.observingMutations && prevProps.observingMutations !== this.props.observingMutations) {
-            // console.log('LinkObserver: mutationsObserve')
-            this.props.mutationsObserve();
-        }
-    }
+    // TODO: handle enbling/disabling later
+    // componentDidUpdate(prevProps: any) {
+    //     if(!this.props.observingMutations) {
+    //         // console.log('LinkObserver: mutationsDisconnect')
+    //         this.props.mutationsDisconnect();
+    //     }
+    //     if(this.props.observingMutations && prevProps.observingMutations !== this.props.observingMutations) {
+    //         // console.log('LinkObserver: mutationsObserve')
+    //         this.props.mutationsObserve();
+    //     }
+    // }
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({

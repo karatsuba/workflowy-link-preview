@@ -6,7 +6,7 @@ import store from './store';
 
 const cleanUp = ({ state, dispatch }: any) => {
     const { links } = state;
-    if (Object.values(links).length > 0) {
+    if (links && Object.values(links).length > 0) {
         return dispatch({
             type: 'CLEAR_LINKS'
         });
