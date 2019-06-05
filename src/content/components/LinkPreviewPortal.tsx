@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom';
 import LinkPreview from './LinkPreview';
 
@@ -13,9 +13,11 @@ class LinkPreviewPortal extends React.Component<any, any> {
 
     componentDidMount() {
         // TODO: fix reload bug
-        this.parentContainer = document.querySelectorAll(`[projectid='${this.props.id}'] > .name`).item(0);
+        this.parentContainer = document
+            .querySelectorAll(`[projectid='${this.props.id}'] > .name`)
+            .item(0);
         // console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
-        if(this.parentContainer){
+        if (this.parentContainer) {
             // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
             this.parentContainer.appendChild(this.container);
         }
@@ -23,7 +25,7 @@ class LinkPreviewPortal extends React.Component<any, any> {
 
     componentWillUnmount() {
         // console.log('GOINT TO REMOVE PREVIEW ON LINK PARENT');
-        if(this.parentContainer){
+        if (this.parentContainer) {
             // console.log('PREVIEW LINK WAS REMOVED ON PARENT');
             this.parentContainer.removeChild(this.container);
         }
@@ -33,9 +35,9 @@ class LinkPreviewPortal extends React.Component<any, any> {
         // console.log('RENDER LinkPreviewPortal', this.props);
         return ReactDOM.createPortal(
             <LinkPreview {...this.props} />,
-            this.container);
+            this.container
+        );
     }
-
 }
 
 export default LinkPreviewPortal;

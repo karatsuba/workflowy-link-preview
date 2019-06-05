@@ -4,4 +4,3 @@ import mutationObserver from '../middleware';
 const store = new Store();
 
 export default applyMiddleware(store, mutationObserver);
-

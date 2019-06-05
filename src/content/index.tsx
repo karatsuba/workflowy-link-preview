@@ -11,7 +11,7 @@ const cleanUp = ({ state, dispatch }: any) => {
             type: 'CLEAR_LINKS'
         });
     }
-}
+};
 
 const initApp = (store: any) => {
     ReactDOM.render(
@@ -19,9 +19,10 @@ const initApp = (store: any) => {
             <LinkObserver />
         </Provider>,
         document.createElement('div')
-    )
+    );
 };
 
-store.ready()
+store
+    .ready()
     .then(() => cleanUp(store))
     .then(() => initApp(store));

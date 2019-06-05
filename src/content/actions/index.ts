@@ -18,14 +18,14 @@ export const loadLinkPreview = (payload: any) => ({
     }
 });
 
-export const mutationsObserve = () => { 
+export const mutationsObserve = () => {
     return {
         type: 'MUTATION_OBSERVER__OBSERVE'
-    }
+    };
 };
 
-export const mutationsDisconnect = () => { 
+export const mutationsDisconnect = () => {
     return {
         type: 'MUTATION_OBSERVER__DISCONNECT'
-    }
+    };
 };
