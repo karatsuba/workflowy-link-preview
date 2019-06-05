@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LinkPreview from './LinkPreview';
 
-class LinkPreviewPortal extends React.Component<any, any> {
+type LinkPreviewPortalProps = {
+    id: string;
+};
+
+export default class extends React.Component<LinkPreviewPortalProps> {
     private container: Element;
     private parentContainer: Element | null = null;
 
@@ -13,14 +16,18 @@ class LinkPreviewPortal extends React.Component<any, any> {
 
     componentDidMount() {
         // TODO: fix reload bug
-        this.parentContainer = document
-            .querySelectorAll(`[projectid='${this.props.id}'] > .name`)
-            .item(0);
+        const { id } = this.props;
+        this.parentContainer = this.getParentContainer(id);
         // console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
         if (this.parentContainer) {
             // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
             this.parentContainer.appendChild(this.container);
         }
+    }
+
+    getParentContainer(id: string) {
+        const selector = `[projectid="${id}" > .name`;
+        return document.querySelectorAll(selector).item(0);
     }
 
     componentWillUnmount() {
@@ -32,12 +39,7 @@ class LinkPreviewPortal extends React.Component<any, any> {
     }
 
     render(): JSX.Element {
-        // console.log('RENDER LinkPreviewPortal', this.props);
-        return ReactDOM.createPortal(
-            <LinkPreview {...this.props} />,
-            this.container
-        );
+        const { children } = this.props;
+        return ReactDOM.createPortal(children, this.container);
     }
 }
-
-export default LinkPreviewPortal;

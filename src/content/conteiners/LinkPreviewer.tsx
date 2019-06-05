@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import LinkPreview from '../components/LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
 import {
     loadLinkPreview,
@@ -13,33 +14,21 @@ class LinkObserver extends React.Component<any, any> {
     }
 
     render(): JSX.Element[] | null {
-        // console.log('RENDER: LinkObserver', this.props);
         const { links = {}, loadLinkPreview } = this.props;
 
         return Object.values(links).length > 0
-            ? Object.values(links).map((link: any) => {
+            ? Object.values(links).map((link: any, index) => {
                   return (
-                      <LinkPreviewPortal
-                          key={link.id}
-                          {...link}
-                          loadLinkPreview={loadLinkPreview}
-                      />
+                      <LinkPreviewPortal key={link.id} id={link.id}>
+                          <LinkPreview
+                              {...link}
+                              loadLinkPreview={loadLinkPreview}
+                          />
+                      </LinkPreviewPortal>
                   );
               })
             : null;
     }
-
-    // TODO: handle enbling/disabling later
-    // componentDidUpdate(prevProps: any) {
-    //     if(!this.props.observingMutations) {
-    //         // console.log('LinkObserver: mutationsDisconnect')
-    //         this.props.mutationsDisconnect();
-    //     }
-    //     if(this.props.observingMutations && prevProps.observingMutations !== this.props.observingMutations) {
-    //         // console.log('LinkObserver: mutationsObserve')
-    //         this.props.mutationsObserve();
-    //     }
-    // }
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({

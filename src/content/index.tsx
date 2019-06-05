@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import LinkObserver from './conteiners/LinkObserver';
+import LinkPreviewer from './conteiners/LinkPreviewer';
 import store from './store';
 
 const cleanUp = ({ state, dispatch }: any) => {
@@ -16,7 +16,7 @@ const cleanUp = ({ state, dispatch }: any) => {
 const initApp = (store: any) => {
     ReactDOM.render(
         <Provider store={store}>
-            <LinkObserver />
+            <LinkPreviewer />
         </Provider>,
         document.createElement('div')
     );
