@@ -1,14 +1,11 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
 
 const DIST = path.resolve(__dirname, './dist');
 const RESOURCES = path.resolve(__dirname, './resources');
 const SRC_BACKGROUND = path.resolve(__dirname, './src/background');
 const SRC_CONTENT = path.resolve(__dirname, './src/content');
-const SRC_POPUP = path.resolve(__dirname, './src/popup');
-const SRC_POPUP_TEMPLATE = path.resolve(RESOURCES, './template.html');
 const MANIFEST = path.resolve(RESOURCES, './manifest.json');
 
 const getBaseConfig = (options = {}) => ({
@@ -31,8 +28,7 @@ const getBaseConfig = (options = {}) => ({
 const config = Object.assign({}, getBaseConfig(), {
     entry: {
         background: SRC_BACKGROUND,
-        content: SRC_CONTENT,
-        popup: SRC_POPUP
+        content: SRC_CONTENT
     },
     output: {
         filename: '[name].js',
@@ -40,13 +36,7 @@ const config = Object.assign({}, getBaseConfig(), {
     },
     plugins: [
         new ChromeExtensionReloader(),
-        new CopyPlugin([{ from: MANIFEST, to: DIST }]),
-        new HtmlWebpackPlugin({
-            title: 'Workflowy link preview popup',
-            filename: 'popup.html',
-            template: SRC_POPUP_TEMPLATE,
-            chunks: ['popup']
-        })
+        new CopyPlugin([{ from: MANIFEST, to: DIST }])
     ]
 });
 
