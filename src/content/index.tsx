@@ -1,20 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import LinkPreviewer from './conteiners/LinkPreviewer';
+import { Store } from 'webext-redux';
 import store from './store';
+import { cleanUpStore } from './actions/index';
+import LinkPreviewer from './conteiners/LinkPreviewer';
 
-const cleanUp = ({ state, dispatch }: any) => {
-    const { links } = state;
-    if (links && Object.values(links).length > 0) {
-        return dispatch({
-            type: 'CLEAR_LINKS'
-        });
-    }
-};
+const cleanUpBackgroundStore = ({ dispatch }: Store) => () =>
+    dispatch(cleanUpStore());
 
-const initApp = (store: any) => {
-    ReactDOM.render(
+const initReactApp = (store: Store) => () => {
+    return ReactDOM.render(
         <Provider store={store}>
             <LinkPreviewer />
         </Provider>,
@@ -24,5 +20,5 @@ const initApp = (store: any) => {
 
 store
     .ready()
-    .then(() => cleanUp(store))
-    .then(() => initApp(store));
+    .then(cleanUpBackgroundStore(store))
+    .then(initReactApp(store));

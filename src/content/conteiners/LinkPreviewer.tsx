@@ -2,11 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import LinkPreview from '../components/LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
-import {
-    loadLinkPreview,
-    mutationsObserve,
-    mutationsDisconnect
-} from '../actions';
+import { loadLinkPreview, mutationsObserve } from '../actions';
 
 class LinkObserver extends React.Component<any, any> {
     componentDidMount() {
@@ -40,7 +36,6 @@ export default connect(
     mapStateToProps,
     {
         loadLinkPreview,
-        mutationsObserve,
-        mutationsDisconnect
+        mutationsObserve
     }
 )(LinkObserver);

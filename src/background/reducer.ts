@@ -11,14 +11,19 @@ const initState = {
 
 const reducer = (state = initState, action: any): any => {
     switch (action.type) {
+        case 'CLEAN_UP_STORE': {
+            const { links = {} } = state;
+            return Object.values(links).length > 0 ? initState : state;
+        }
+
         case 'ADD_LINK': {
             const links = action.payload.reduce((links: any, link: any) => {
                 return {
                     [link.id]: link,
                     ...links
-                }
+                };
             }, state.links);
-            return { 
+            return {
                 ...state,
                 links
             };
@@ -28,21 +33,17 @@ const reducer = (state = initState, action: any): any => {
             const links = action.payload.reduce((links: any, id: any) => {
                 return Object.keys(links)
                     .filter(linkId => linkId !== id)
-                    .reduce((result, linkId) => {
-                        result[linkId] = links[linkId];
-                        return result;
-                    }, {} as any);
+                    .reduce(
+                        (result, linkId) => {
+                            result[linkId] = links[linkId];
+                            return result;
+                        },
+                        {} as any
+                    );
             }, state.links);
-            return { 
+            return {
                 ...state,
                 links
-            };
-        }
-
-        case 'CLEAR_LINKS': {
-            return { 
-                ...state,
-                links: {}
             };
         }
 
@@ -58,7 +59,7 @@ const reducer = (state = initState, action: any): any => {
                         isFetching: true
                     }
                 }
-            }
+            };
         }
 
         case LINK_PREVIEW_SUCCESS: {
@@ -74,19 +75,21 @@ const reducer = (state = initState, action: any): any => {
                         isFetching: false
                     }
                 }
-            }
+            };
         }
 
         case 'MUTATION_OBSERVER__OBSERVE': {
-            const { observingMutations }  = state;
+            const { observingMutations } = state;
             return {
                 ...state,
-                observingMutations: (observingMutations ? observingMutations : !observingMutations)
+                observingMutations: observingMutations
+                    ? observingMutations
+                    : !observingMutations
             };
         }
 
         case 'MUTATION_OBSERVER__TOGGLE': {
-            const { observingMutations }  = state;
+            const { observingMutations } = state;
             return {
                 ...state,
                 observingMutations: !observingMutations

@@ -29,3 +29,7 @@ export const mutationsDisconnect = () => {
         type: 'MUTATION_OBSERVER__DISCONNECT'
     };
 };
+
+export const cleanUpStore = () => ({
+    type: 'CLEAN_UP_STORE'
+});

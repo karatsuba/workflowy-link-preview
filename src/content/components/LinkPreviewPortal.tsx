@@ -26,7 +26,7 @@ export default class extends React.Component<LinkPreviewPortalProps> {
     }
 
     getParentContainer(id: string) {
-        const selector = `[projectid="${id}" > .name`;
+        const selector = `[projectid="${id}"] > .name`;
         return document.querySelectorAll(selector).item(0);
     }
 
