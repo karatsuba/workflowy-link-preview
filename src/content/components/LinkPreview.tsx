@@ -3,7 +3,7 @@ import React from 'react';
 class LinkPreview extends React.Component<any, any> {
     componentDidMount() {
         const { id, url } = this.props;
-        this.props.loadLinkPreview({ id, url });
+        this.props.loadLinkPreview(id, url);
     }
 
     render(): JSX.Element {

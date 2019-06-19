@@ -2,7 +2,7 @@ import {
     LINK_PREVIEW_REQUEST,
     LINK_PREVIEW_SUCCESS,
     LINK_PREVIEW_FAILURE
-} from '../content/actions';
+} from './index';
 
 const initState = {
     links: {},

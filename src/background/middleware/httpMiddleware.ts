@@ -5,13 +5,16 @@ export const HTTP_ACTION = 'HTTP ACTION';
 
 const parser = Parser.create();
 
-const httpMiddleware = (store: MiddlewareAPI) => (next: Dispatch) => (action: any) => {
+// TODO: not sure about http middleware usage
+const httpMiddleware = (store: MiddlewareAPI) => (next: Dispatch) => (
+    action: any
+) => {
     if (!action[HTTP_ACTION]) {
         return next(action);
     }
 
     const { types, payload } = action[HTTP_ACTION];
-    const [requestType, successType, failureType] = types
+    const [requestType, successType, failureType] = types;
 
     next({
         type: requestType,
@@ -20,21 +23,26 @@ const httpMiddleware = (store: MiddlewareAPI) => (next: Dispatch) => (action: an
         }
     });
 
-    parser.parseURL(payload.url)
-        .then(data => next({
-            type: successType,
-            payload: {
-                ...payload,
-                ...data
-            }
-        }))
-        .catch(error => next({
-            type: failureType,
-            payload: {
-                ...payload,
-                ...error
-            }
-        }))
-}
+    parser
+        .parseURL(payload.url)
+        .then(data =>
+            next({
+                type: successType,
+                payload: {
+                    ...payload,
+                    ...data
+                }
+            })
+        )
+        .catch(error =>
+            next({
+                type: failureType,
+                payload: {
+                    ...payload,
+                    ...error
+                }
+            })
+        );
+};
 
 export default httpMiddleware;
