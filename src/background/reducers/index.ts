@@ -1,8 +1,8 @@
 import {
-    LINK_PREVIEW_REQUEST,
-    LINK_PREVIEW_SUCCESS,
-    LINK_PREVIEW_FAILURE
-} from './index';
+    LOAD_LINK_PREVIEW,
+    LOAD_LINK_PREVIEW_SUCCESS,
+    LOAD_LINK_PREVIEW_FAILURE
+} from '../actions/actionsCreators';
 
 const initState = {
     links: {},
@@ -47,7 +47,7 @@ const reducer = (state = initState, action: any): any => {
             };
         }
 
-        case LINK_PREVIEW_REQUEST: {
+        case LOAD_LINK_PREVIEW: {
             const { id } = action.payload;
             const link = (state.links as any)[id];
             return {
@@ -62,7 +62,7 @@ const reducer = (state = initState, action: any): any => {
             };
         }
 
-        case LINK_PREVIEW_SUCCESS: {
+        case LOAD_LINK_PREVIEW_SUCCESS: {
             const { id, ...data } = action.payload;
             const link = (state.links as any)[id];
             return {
