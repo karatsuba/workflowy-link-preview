@@ -1,8 +1,7 @@
 import {
     LOAD_LINK_PREVIEW,
-    LOAD_LINK_PREVIEW_SUCCESS,
-    LOAD_LINK_PREVIEW_FAILURE
-} from '../actions/actionsCreators';
+    LOAD_LINK_PREVIEW_SUCCESS
+} from '../../common/actions/types';
 
 const initState = {
     links: {},

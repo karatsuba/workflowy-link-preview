@@ -4,8 +4,9 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import reducer from './reducers';
-import * as aliases from './actions/aliases';
+import aliases from './aliases';
 
+// TODO: remove logger in prod mode
 const store = createStore(
     reducer,
     undefined,

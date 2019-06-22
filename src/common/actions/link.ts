@@ -1,6 +1,8 @@
-export const LOAD_LINK_PREVIEW = 'LOAD_LINK_PREVIEW';
-export const LOAD_LINK_PREVIEW_SUCCESS = 'LOAD_LINK_PREVIEW_SUCCESS';
-export const LOAD_LINK_PREVIEW_FAILURE = 'LOAD_LINK_PREVIEW_FAILURE';
+import {
+    LOAD_LINK_PREVIEW,
+    LOAD_LINK_PREVIEW_SUCCESS,
+    LOAD_LINK_PREVIEW_FAILURE
+} from './types';
 
 export const loadLinkPreview = (id: string) => ({
     type: LOAD_LINK_PREVIEW,
