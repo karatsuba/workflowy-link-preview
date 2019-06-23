@@ -7,7 +7,7 @@ class LinkPreview extends React.Component<any, any> {
     }
 
     render(): JSX.Element {
-        const { isFetching, title, image, description } = this.props;
+        const { isFetching, title, imageUrl, description } = this.props;
 
         if (isFetching) {
             return <div>Loading...</div>;
@@ -16,7 +16,7 @@ class LinkPreview extends React.Component<any, any> {
         return (
             <div className='link-preview' style={{ userSelect: 'text' }}>
                 <div className='image'>
-                    <img src={image} alt='' style={{ maxWidth: '200px' }} />
+                    <img src={imageUrl} alt='' style={{ maxWidth: '200px' }} />
                 </div>
                 <h3>{title}</h3>
                 <p>{description}</p>

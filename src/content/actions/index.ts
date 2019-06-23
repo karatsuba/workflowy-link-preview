@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { LOAD_LINK_PREVIEW_ALIAS } from '../../common/actions/types';
-import Link from '../models/Link';
+import Link from '../../common/models/Link';
 
 export type ActionWithPayload<P> = Action & {
     payload: P;

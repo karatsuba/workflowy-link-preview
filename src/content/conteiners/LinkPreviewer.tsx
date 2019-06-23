@@ -9,7 +9,7 @@ import {
     ActionWithPayload,
     LinkPreviewPayload
 } from '../actions';
-import Link from '../models/Link';
+import Link from '../../common/models/Link';
 
 type LinkPreviewerProps = {
     links: Link[];

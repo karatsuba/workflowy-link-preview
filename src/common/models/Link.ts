@@ -3,21 +3,21 @@ export default class Link {
     description: string;
     url: string;
     title: string;
-    image: string;
+    imageUrl: string;
     fetching: boolean;
 
     constructor(
         id: string,
         title: string,
         description: string,
-        image: string,
+        imageUrl: string,
         url: string
     ) {
         this.id = id;
         this.url = url;
         this.description = description;
         this.title = title;
-        this.image = image;
+        this.imageUrl = imageUrl;
 
         this.fetching = false;
     }
