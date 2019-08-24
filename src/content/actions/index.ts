@@ -1,5 +1,10 @@
 import { Action } from 'redux';
-import { LOAD_LINK_PREVIEW_ALIAS } from '../../common/actions/types';
+import {
+    LOAD_LINK_PREVIEW_ALIAS,
+    OBSERVE_MUTATIONS,
+    IGNORE_MUTATIONS,
+    CLEAN_UP_STORE
+} from '../../common/actions/types';
 import Link from '../../common/models/Link';
 
 export type ActionWithPayload<P> = Action & {
@@ -20,9 +25,13 @@ export const loadLinkPreview = (
 });
 
 export const observeMutations = (): Action => ({
-    type: 'MUTATION_OBSERVER__OBSERVE'
+    type: OBSERVE_MUTATIONS
+});
+
+export const ignoreMutations = (): Action => ({
+    type: IGNORE_MUTATIONS
 });
 
 export const cleanUpStore = (): Action => ({
-    type: 'CLEAN_UP_STORE'
+    type: CLEAN_UP_STORE
 });

@@ -1,6 +1,9 @@
 import {
     LOAD_LINK_PREVIEW,
-    LOAD_LINK_PREVIEW_SUCCESS
+    LOAD_LINK_PREVIEW_SUCCESS,
+    OBSERVE_MUTATIONS,
+    IGNORE_MUTATIONS,
+    CLEAN_UP_STORE
 } from '../../common/actions/types';
 
 const initState = {
@@ -10,7 +13,7 @@ const initState = {
 
 const reducer = (state = initState, action: any): any => {
     switch (action.type) {
-        case 'CLEAN_UP_STORE': {
+        case CLEAN_UP_STORE: {
             const { links = {} } = state;
             return Object.values(links).length > 0 ? initState : state;
         }
@@ -77,21 +80,17 @@ const reducer = (state = initState, action: any): any => {
             };
         }
 
-        case 'MUTATION_OBSERVER__OBSERVE': {
-            const { observingMutations } = state;
+        case OBSERVE_MUTATIONS: {
             return {
                 ...state,
-                observingMutations: observingMutations
-                    ? observingMutations
-                    : !observingMutations
+                observingMutations: true
             };
         }
 
-        case 'MUTATION_OBSERVER__TOGGLE': {
-            const { observingMutations } = state;
+        case IGNORE_MUTATIONS: {
             return {
                 ...state,
-                observingMutations: !observingMutations
+                observingMutations: false
             };
         }
 

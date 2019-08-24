@@ -1,17 +1,13 @@
 import Link from '../../common/models/Link';
+import MetaProp from '../models/MetaProp';
+
+// parse url and return parsed metatags data
+export default (url: string) =>
+    fetch(url)
+        .then(handleResponse)
+        .catch(handleError);
 
 const parser = new DOMParser();
-
-class MetaProp {
-    type: string;
-    og: string;
-    twitter: string;
-    constructor(type: string) {
-        this.type = type;
-        this.og = `og:${type}`;
-        this.twitter = `twitter:${type}`;
-    }
-}
 
 const titleMetaProp = new MetaProp('title');
 const imageMetaProp = new MetaProp('image');
@@ -75,8 +71,3 @@ const handleResponseAsImage = (response: Response): Promise<Partial<Link>> =>
     });
 
 const handleError = (error: Error) => Promise.reject(error);
-
-export default (url: string) =>
-    fetch(url)
-        .then(handleResponse)
-        .catch(handleError);
