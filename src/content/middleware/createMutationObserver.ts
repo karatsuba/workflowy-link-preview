@@ -26,7 +26,16 @@ const filterContentLinks = (nodes: NodeList) => {
     );
 };
 
-const isConnectedElement = (element: HTMLAnchorElement) => element.isConnected;
+const isContentLink = (node: Node) => {
+    const CONTENT_LINK_CLASS_NAME = 'contentLink';
+    return (
+        node instanceof HTMLAnchorElement &&
+        node.isConnected &&
+        node.classList.contains(CONTENT_LINK_CLASS_NAME)
+    );
+};
+
+// const isConnectedElement = (node: Node) => node.isConnected;
 
 const findContentLinks = (nodes: NodeList | Element[]) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
@@ -100,9 +109,8 @@ export default (dispatch: Dispatch) => {
                 ) {
                     // CONTENT LINK WAS ADDED
                     if (
-                        filterContentLinks(mutation.addedNodes).filter(
-                            isConnectedElement
-                        ).length > 0
+                        Array.from(mutation.addedNodes).filter(isContentLink)
+                            .length > 0
                     ) {
                         // GET LINKS AND DISPATCH ADD ACTION
 
@@ -111,12 +119,14 @@ export default (dispatch: Dispatch) => {
                             mutation.target
                         );
 
-                        dispatch({
-                            type: 'ADD_LINK',
-                            payload: addedMarkdownLinks.map(
-                                buildMarkdownLinkPayload(mutation.target)
-                            )
-                        });
+                        if (addedMarkdownLinks.length > 0) {
+                            dispatch({
+                                type: 'ADD_LINK',
+                                payload: addedMarkdownLinks.map(
+                                    buildMarkdownLinkPayload(mutation.target)
+                                )
+                            });
+                        }
                     }
                 }
             }
