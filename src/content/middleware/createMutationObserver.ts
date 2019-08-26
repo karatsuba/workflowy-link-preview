@@ -64,6 +64,14 @@ const buildMarkdownLinkPayload = (element: Element) => (url: string) => ({
 
 const getParentElement = (element: Element) => element.parentElement!;
 
+// const handleMutations = (mutation: MutationRecord) => {
+//     if (mutation.addedNodes.length > 0) {
+//         handleAddedNodesMutations(mutation.target, mutation.addedNodes);
+//     }
+// };
+
+// const handleAddedNodesMutations = (target: Node, addedNodes: NodeList) => {};
+
 export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
         mutations.forEach(mutation => {
