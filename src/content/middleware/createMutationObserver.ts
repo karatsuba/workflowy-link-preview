@@ -68,9 +68,40 @@ const getParentElement = (element: Element) => element.parentElement!;
 //     if (mutation.addedNodes.length > 0) {
 //         handleAddedNodesMutations(mutation.target, mutation.addedNodes);
 //     }
+
+//     if (mutation.removedNodes.length > 0) {
+//         handleRemovedNodesMutations(mutation.target, mutation.removedNodes);
+//     }
 // };
 
-// const handleAddedNodesMutations = (target: Node, addedNodes: NodeList) => {};
+// const handleAddedNodesMutations = (target: Node, addedNodes: NodeList) => {
+//     // CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS
+//     if (targetContainsClassName(target, 'children')) {
+//         if (findContentLinks(addedNodes).length > 0) {
+//             // GET LINKS AND DISPATCH ADD ACTION
+//             const addedContentLinks = findContentLinks(addedNodes).map(
+//                 getParentElement
+//             );
+//             const [addedLink] = addedContentLinks;
+//             const addedMarkdownLinks = filterMarkdownLinks(addedLink);
+
+//             dispatch({
+//                 type: 'ADD_LINK',
+//                 payload: addedMarkdownLinks.map(
+//                     buildMarkdownLinkPayload(addedLink)
+//                 )
+//             });
+//         }
+//     }
+// };
+
+// const handleRemovedNodesMutations = (
+//     target: Node,
+//     removedNodes: NodeList
+// ) => {};
+
+// const targetContainsClassName = (target: Node, className: string) =>
+//     target instanceof HTMLElement && target.classList.contains(className);
 
 export default (dispatch: Dispatch) => {
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
