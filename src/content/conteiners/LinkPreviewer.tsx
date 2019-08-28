@@ -15,10 +15,7 @@ type LinkPreviewerProps = {
     links: Link[];
     observingMutations: boolean;
     observeMutations: () => Action;
-    loadLinkPreview: (
-        id: string,
-        url: string
-    ) => ActionWithPayload<LinkPreviewPayload>;
+    loadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
 };
 
 class LinkPreviewer extends React.Component<LinkPreviewerProps> {
@@ -38,7 +35,7 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    console.log(state);
+    // console.log(state);
     return {
         links: Object.values<Link>(state.links),
         observingMutations: state.observingMutations

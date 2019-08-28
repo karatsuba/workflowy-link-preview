@@ -3,7 +3,8 @@ import {
     LOAD_LINK_PREVIEW_SUCCESS,
     OBSERVE_MUTATIONS,
     IGNORE_MUTATIONS,
-    CLEAN_UP_STORE
+    CLEAN_UP_STORE,
+    ADD_LINK
 } from '../../common/actions/types';
 
 const initState = {
@@ -18,13 +19,15 @@ const reducer = (state = initState, action: any): any => {
             return Object.values(links).length > 0 ? initState : state;
         }
 
-        case 'ADD_LINK': {
-            const links = action.payload.reduce((links: any, link: any) => {
-                return {
-                    [link.id]: link,
-                    ...links
-                };
-            }, state.links);
+        case ADD_LINK: {
+            const { id, url }: { id: string; url: string } = action.payload;
+            const links = {
+                ...state.links,
+                [id]: {
+                    id,
+                    url
+                }
+            };
             return {
                 ...state,
                 links

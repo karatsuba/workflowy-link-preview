@@ -1,4 +1,6 @@
 import { Dispatch } from 'redux';
+import { NodeAddedHandler } from './handlers/NodeAddedHandler';
+import { NodeEditedHandler } from './handlers/NodeEditedHandler';
 
 const filterMarkdownLinks = (element: Element): string[] => {
     const MARKDOWN_LINK_REGEX = /\[(.*?)\]\((.*?)\)/;
@@ -102,10 +104,15 @@ const getParentElement = (element: Element) => element.parentElement!;
 
 // const targetContainsClassName = (target: Node, className: string) =>
 //     target instanceof HTMLElement && target.classList.contains(className);
-
 export default (dispatch: Dispatch) => {
+    const added = new NodeAddedHandler(dispatch);
+    const edited = new NodeEditedHandler(dispatch);
+    const handler = added.setNext(edited);
+
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
         mutations.forEach(mutation => {
+            // console.log(mutation);
+            handler.handle(mutation);
             // MUTATION CASES:
             // case with moving up/down
             // tree travesting with click and "<" ">" buttons
@@ -114,61 +121,52 @@ export default (dispatch: Dispatch) => {
             // case with tab
             // case with drag
 
-            if (mutation.addedNodes.length > 0) {
-                // CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS
-                if (
-                    mutation.target instanceof HTMLElement &&
-                    mutation.target.classList.contains('children')
-                ) {
-                    // CONTENT LINK WAS ADDED
-                    if (findContentLinks(mutation.addedNodes).length > 0) {
-                        // GET LINKS AND DISPATCH ADD ACTION
-                        console.log(mutation);
-                        const addedContentLinks = findContentLinks(
-                            mutation.addedNodes
-                        ).map(getParentElement);
-                        const [addedLink] = addedContentLinks;
-                        const addedMarkdownLinks = filterMarkdownLinks(
-                            addedLink
-                        );
+            // if (mutation.addedNodes.length > 0) {
+            //     // CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS
+            //     if (
+            //         mutation.target instanceof HTMLElement &&
+            //         mutation.target.classList.contains('children')
+            //     ) {
+            //         console.log('// CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS');
+            //         // CONTENT LINK WAS ADDED
+            //         if (findContentLinks(mutation.addedNodes).length > 0) {
+            //             // GET LINKS AND DISPATCH ADD ACTION
+            //             const addedContentLinks = findContentLinks(mutation.addedNodes).map(
+            //                 getParentElement
+            //             );
+            //             const [addedLink] = addedContentLinks;
+            //             const addedMarkdownLinks = filterMarkdownLinks(addedLink);
 
-                        dispatch({
-                            type: 'ADD_LINK',
-                            payload: addedMarkdownLinks.map(
-                                buildMarkdownLinkPayload(addedLink)
-                            )
-                        });
-                    }
-                }
+            //             dispatch({
+            //                 type: 'ADD_LINK',
+            //                 payload: addedMarkdownLinks.map(buildMarkdownLinkPayload(addedLink))
+            //             });
+            //         }
+            //     }
 
-                // CONTENT DIV WAS EDITED
-                if (
-                    mutation.target instanceof HTMLElement &&
-                    mutation.target.classList.contains('content')
-                ) {
-                    // CONTENT LINK WAS ADDED
-                    if (
-                        Array.from(mutation.addedNodes).filter(isContentLink)
-                            .length > 0
-                    ) {
-                        // GET LINKS AND DISPATCH ADD ACTION
+            //     // CONTENT DIV WAS EDITED
+            //     if (
+            //         mutation.target instanceof HTMLElement &&
+            //         mutation.target.classList.contains('content')
+            //     ) {
+            //         // CONTENT LINK WAS ADDED
+            //         if (Array.from(mutation.addedNodes).filter(isContentLink).length > 0) {
+            //             // GET LINKS AND DISPATCH ADD ACTION
 
-                        // get only markdown links here
-                        const addedMarkdownLinks = filterMarkdownLinks(
-                            mutation.target
-                        );
+            //             // get only markdown links here
+            //             const addedMarkdownLinks = filterMarkdownLinks(mutation.target);
 
-                        if (addedMarkdownLinks.length > 0) {
-                            dispatch({
-                                type: 'ADD_LINK',
-                                payload: addedMarkdownLinks.map(
-                                    buildMarkdownLinkPayload(mutation.target)
-                                )
-                            });
-                        }
-                    }
-                }
-            }
+            //             if (addedMarkdownLinks.length > 0) {
+            //                 dispatch({
+            //                     type: 'ADD_LINK',
+            //                     payload: addedMarkdownLinks.map(
+            //                         buildMarkdownLinkPayload(mutation.target)
+            //                     )
+            //                 });
+            //             }
+            //         }
+            //     }
+            // }
 
             if (mutation.removedNodes.length > 0) {
                 // CONTENT DIV WAS EDITED
@@ -181,9 +179,7 @@ export default (dispatch: Dispatch) => {
                         // CONTENT LINK NODE WAS DELETED
                         if (findContentLinks([mutation.target]).length === 0) {
                             // GET LINK ID AND DISPATCH REMOVE ACTION
-                            const removedContentLinkId = findClosestProjectId(
-                                mutation.target
-                            );
+                            const removedContentLinkId = findClosestProjectId(mutation.target);
                             dispatch({
                                 type: 'REMOVE_LINK',
                                 payload: [removedContentLinkId]
@@ -201,9 +197,9 @@ export default (dispatch: Dispatch) => {
                     // CONTENT LINK NODE WERE COLLAPSED => DELETED
                     if (findContentLinks(mutation.removedNodes).length > 0) {
                         // GET LINKS ID AND DISPATCH REMOVE ACTION
-                        const removedContentLinks = findContentLinks(
-                            mutation.removedNodes
-                        ).map(findClosestProjectId);
+                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(
+                            findClosestProjectId
+                        );
                         dispatch({
                             type: 'REMOVE_LINK',
                             payload: removedContentLinks
@@ -219,9 +215,9 @@ export default (dispatch: Dispatch) => {
                     // CONTENT LINK NODE WERE MOVED => DELETED
                     if (findContentLinks(mutation.removedNodes).length > 0) {
                         // GET LINKS ID AND DISPATCH REMOVE ACTION
-                        const removedContentLinks = findContentLinks(
-                            mutation.removedNodes
-                        ).map(findClosestProjectId);
+                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(
+                            findClosestProjectId
+                        );
                         dispatch({
                             type: 'REMOVE_LINK',
                             payload: removedContentLinks
@@ -237,9 +233,9 @@ export default (dispatch: Dispatch) => {
                     // CONTENT LINK NODE WERE REMOVED
                     if (findContentLinks(mutation.removedNodes).length > 0) {
                         // GET LINKS ID AND DISPATCH REMOVE ACTION
-                        const removedContentLinks = findContentLinks(
-                            mutation.removedNodes
-                        ).map(findClosestProjectId);
+                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(
+                            findClosestProjectId
+                        );
                         dispatch({
                             type: 'REMOVE_LINK',
                             payload: removedContentLinks

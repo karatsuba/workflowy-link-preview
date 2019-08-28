@@ -6,8 +6,7 @@ import store from './store';
 import { cleanUpStore } from './actions/index';
 import LinkPreviewer from './conteiners/LinkPreviewer';
 
-const cleanUpBackgroundStore = ({ dispatch }: Store) => () =>
-    dispatch(cleanUpStore());
+const cleanUpBackgroundStore = ({ dispatch }: Store) => () => dispatch(cleanUpStore());
 
 const initReactApp = (store: Store) => () => {
     return ReactDOM.render(
