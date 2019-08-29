@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
+import { NodeMovedUpDownHandler } from './handlers/NodeMovedUpDownHandler';
 import { NodeAddedHandler } from './handlers/NodeAddedHandler';
-import { NodeEditedHandler } from './handlers/NodeEditedHandler';
 
 const filterMarkdownLinks = (element: Element): string[] => {
     const MARKDOWN_LINK_REGEX = /\[(.*?)\]\((.*?)\)/;
@@ -105,8 +105,8 @@ const getParentElement = (element: Element) => element.parentElement!;
 // const targetContainsClassName = (target: Node, className: string) =>
 //     target instanceof HTMLElement && target.classList.contains(className);
 export default (dispatch: Dispatch) => {
-    const added = new NodeAddedHandler(dispatch);
-    const edited = new NodeEditedHandler(dispatch);
+    const added = new NodeMovedUpDownHandler(dispatch);
+    const edited = new NodeAddedHandler(dispatch);
     const handler = added.setNext(edited);
 
     const observer = new MutationObserver((mutations: MutationRecord[]) => {

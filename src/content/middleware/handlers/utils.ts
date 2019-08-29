@@ -55,7 +55,7 @@ export const findContentLinks = (nodes: NodeList | Element[]) => {
 };
 
 export const findClosestProjectId = (element: Element) => {
-    const project = element.closest('div.project');
+    const project = element ? element.closest('div.project') : null;
     return project ? project.getAttribute('projectid') : null;
 };
 
