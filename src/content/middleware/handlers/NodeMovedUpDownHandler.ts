@@ -10,7 +10,7 @@ export class NodeMovedUpDownHandler extends AbstractHandler {
         ) {
             // CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS
             const [link] = this.getMarkdownContentLink(mutation.addedNodes);
-            const payload = this.preparePayload(link as HTMLAnchorElement);
+            const payload = this.prepareLinkPayload(link as HTMLAnchorElement);
             if (payload.id && payload.url) {
                 this.dispatch(addLink(payload.id, payload.url));
             }

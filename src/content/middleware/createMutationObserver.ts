@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 import { NodeMovedUpDownHandler } from './handlers/NodeMovedUpDownHandler';
 import { NodeAddedHandler } from './handlers/NodeAddedHandler';
 
+// OBSOLETE
 const filterMarkdownLinks = (element: Element): string[] => {
     const MARKDOWN_LINK_REGEX = /\[(.*?)\]\((.*?)\)/;
 
@@ -170,78 +171,75 @@ export default (dispatch: Dispatch) => {
 
             if (mutation.removedNodes.length > 0) {
                 // CONTENT DIV WAS EDITED
-                if (
-                    mutation.target instanceof HTMLElement &&
-                    mutation.target.classList.contains('content')
-                ) {
-                    // CONTENT LINK NODE WAS EDITED OR DELETED
-                    if (filterContentLinks(mutation.removedNodes).length > 0) {
-                        // CONTENT LINK NODE WAS DELETED
-                        if (findContentLinks([mutation.target]).length === 0) {
-                            // GET LINK ID AND DISPATCH REMOVE ACTION
-                            const removedContentLinkId = findClosestProjectId(mutation.target);
-                            dispatch({
-                                type: 'REMOVE_LINK',
-                                payload: [removedContentLinkId]
-                            });
-                        }
-                        // TODO: handle edit case and try reload url, if failed => show load failed
-                    }
-                }
-
+                // if (
+                //     mutation.target instanceof HTMLElement &&
+                //     mutation.target.classList.contains('content')
+                // ) {
+                //     // CONTENT LINK NODE WAS EDITED OR DELETED
+                //     if (filterContentLinks(mutation.removedNodes).length > 0) {
+                //         // CONTENT LINK NODE WAS DELETED
+                //         if (findContentLinks([mutation.target]).length === 0) {
+                //             // GET LINK ID AND DISPATCH REMOVE ACTION
+                //             const removedContentLinkId = findClosestProjectId(mutation.target);
+                //             dispatch({
+                //                 type: 'REMOVE_LINK',
+                //                 payload: [removedContentLinkId]
+                //             });
+                //         }
+                //         // TODO: handle edit case and try reload url, if failed => show load failed
+                //     }
+                // }
                 // PROJECT DIV WAS COLLAPSED
-                if (
-                    mutation.target instanceof HTMLElement &&
-                    mutation.target.classList.contains('project')
-                ) {
-                    // CONTENT LINK NODE WERE COLLAPSED => DELETED
-                    if (findContentLinks(mutation.removedNodes).length > 0) {
-                        // GET LINKS ID AND DISPATCH REMOVE ACTION
-                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(
-                            findClosestProjectId
-                        );
-                        dispatch({
-                            type: 'REMOVE_LINK',
-                            payload: removedContentLinks
-                        });
-                    }
-                }
-
-                // CHILDREN NODE WAS MOVED (DELETED) WITH TAB OR DRAGGED BY MOUSE
-                if (
-                    mutation.target instanceof HTMLElement &&
-                    mutation.target.classList.contains('children')
-                ) {
-                    // CONTENT LINK NODE WERE MOVED => DELETED
-                    if (findContentLinks(mutation.removedNodes).length > 0) {
-                        // GET LINKS ID AND DISPATCH REMOVE ACTION
-                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(
-                            findClosestProjectId
-                        );
-                        dispatch({
-                            type: 'REMOVE_LINK',
-                            payload: removedContentLinks
-                        });
-                    }
-                }
-
+                // if (
+                //     mutation.target instanceof HTMLElement &&
+                //     mutation.target.classList.contains('project')
+                // ) {
+                //     // CONTENT LINK NODE WERE COLLAPSED => DELETED
+                //     if (findContentLinks(mutation.removedNodes).length > 0) {
+                //         // GET LINKS ID AND DISPATCH REMOVE ACTION
+                //         const removedContentLinks = findContentLinks(mutation.removedNodes).map(
+                //             findClosestProjectId
+                //         );
+                //         dispatch({
+                //             type: 'REMOVE_LINK',
+                //             payload: removedContentLinks
+                //         });
+                //     }
+                // }
+                // // CHILDREN NODE WAS MOVED (DELETED) WITH TAB OR DRAGGED BY MOUSE
+                // if (
+                //     mutation.target instanceof HTMLElement &&
+                //     mutation.target.classList.contains('children')
+                // ) {
+                //     // CONTENT LINK NODE WERE MOVED => DELETED
+                //     if (findContentLinks(mutation.removedNodes).length > 0) {
+                //         // GET LINKS ID AND DISPATCH REMOVE ACTION
+                //         const removedContentLinks = findContentLinks(mutation.removedNodes).map(
+                //             findClosestProjectId
+                //         );
+                //         dispatch({
+                //             type: 'REMOVE_LINK',
+                //             payload: removedContentLinks
+                //         });
+                //     }
+                // }
                 // PAGE NODES WERE DELETED WITH "<", ">" OR BULLET CLICK
-                if (
-                    mutation.target instanceof HTMLElement &&
-                    mutation.target.classList.contains('page')
-                ) {
-                    // CONTENT LINK NODE WERE REMOVED
-                    if (findContentLinks(mutation.removedNodes).length > 0) {
-                        // GET LINKS ID AND DISPATCH REMOVE ACTION
-                        const removedContentLinks = findContentLinks(mutation.removedNodes).map(
-                            findClosestProjectId
-                        );
-                        dispatch({
-                            type: 'REMOVE_LINK',
-                            payload: removedContentLinks
-                        });
-                    }
-                }
+                // if (
+                //     mutation.target instanceof HTMLElement &&
+                //     mutation.target.classList.contains('page')
+                // ) {
+                //     // CONTENT LINK NODE WERE REMOVED
+                //     if (findContentLinks(mutation.removedNodes).length > 0) {
+                //         // GET LINKS ID AND DISPATCH REMOVE ACTION
+                //         const removedContentLinks = findContentLinks(mutation.removedNodes).map(
+                //             findClosestProjectId
+                //         );
+                //         dispatch({
+                //             type: 'REMOVE_LINK',
+                //             payload: removedContentLinks
+                //         });
+                //     }
+                // }
             }
         });
     });

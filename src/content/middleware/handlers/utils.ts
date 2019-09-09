@@ -39,7 +39,7 @@ export const isContentLink = (node: Node) => {
     );
 };
 
-export const findContentLinks = (nodes: NodeList | Element[]) => {
+export const findContentLinks = (nodes: NodeList | Element[] | Node[]) => {
     const CONTENT_LINK_CLASS_NAME = 'contentLink';
     const res = Array.from(nodes).reduce(
         (result, node) => {

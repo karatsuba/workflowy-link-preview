@@ -11,7 +11,7 @@ export class NodeAddedHandler extends AbstractHandler {
             // CONTENT LINK WAS ADDED
             const [link] = this.getContentLink(mutation.addedNodes);
             if (link && this.isMarkdownLink(mutation.target as Element)) {
-                const payload = this.preparePayload(link as HTMLAnchorElement);
+                const payload = this.prepareLinkPayload(link as HTMLAnchorElement);
                 if (payload.id && payload.url) {
                     this.dispatch(addLink(payload.id, payload.url));
                 }

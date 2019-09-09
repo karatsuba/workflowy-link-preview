@@ -10,3 +10,4 @@ export const IGNORE_MUTATIONS = 'IGNORE_MUTATIONS';
 export const CLEAN_UP_STORE = 'CLEAN_UP_STORE';
 
 export const ADD_LINK = 'ADD_LINK';
+export const REMOVE_LINK = 'REMOVE_LINK';

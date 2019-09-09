@@ -21,7 +21,7 @@ export abstract class AbstractHandler implements Handler {
         }
     }
 
-    protected preparePayload(link: HTMLAnchorElement) {
+    protected prepareLinkPayload(link: HTMLAnchorElement) {
         return {
             id: utils.findClosestProjectId(link) || null,
             url: (link && link.href) || null
@@ -30,6 +30,13 @@ export abstract class AbstractHandler implements Handler {
 
     protected getMarkdownContentLink(nodes: NodeList) {
         return utils.findContentLinks(nodes).filter(this.isMarkdownLink);
+    }
+
+    protected isContentLink(node: Node) {
+        const CONTENT_LINK_CLASS_NAME = 'contentLink';
+        return (
+            node instanceof HTMLAnchorElement && node.classList.contains(CONTENT_LINK_CLASS_NAME)
+        );
     }
 
     protected isMarkdownLink(element: Element) {
