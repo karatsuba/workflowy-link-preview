@@ -35,7 +35,8 @@ const reducer = (state = initState, action: any): any => {
         }
 
         case 'REMOVE_LINK': {
-            const links = action.payload.reduce((links: any, id: any) => {
+            const { id: ids }: { id: string[] } = action.payload;
+            const links = ids.reduce((links: any, id: any) => {
                 return Object.keys(links)
                     .filter(linkId => linkId !== id)
                     .reduce(

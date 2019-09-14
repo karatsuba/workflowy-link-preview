@@ -12,7 +12,7 @@ export abstract class AbstractHandler implements Handler {
 
     public setNext(handler: Handler): Handler {
         this.nextHandler = handler;
-        return this;
+        return handler;
     }
 
     public handle(mutation: MutationRecord): void {
