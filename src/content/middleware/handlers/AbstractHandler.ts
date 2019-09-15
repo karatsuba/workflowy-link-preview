@@ -2,6 +2,8 @@ import { Dispatch } from 'redux';
 import { Handler } from './Handler';
 
 export abstract class AbstractHandler implements Handler {
+    private static readonly CONTENT_LINK = 'contentLink';
+
     private nextHandler!: Handler;
     public dispatch: Dispatch;
 
@@ -27,14 +29,10 @@ export abstract class AbstractHandler implements Handler {
         };
     }
 
-    protected getMarkdownContentLink(nodes: NodeList) {
-        return this.findContentLinks(nodes).filter(this.isMarkdownLink);
-    }
-
     protected isContentLink(node: Node) {
-        const CONTENT_LINK_CLASS_NAME = 'contentLink';
         return (
-            node instanceof HTMLAnchorElement && node.classList.contains(CONTENT_LINK_CLASS_NAME)
+            node instanceof HTMLAnchorElement &&
+            node.classList.contains(AbstractHandler.CONTENT_LINK)
         );
     }
 
@@ -51,24 +49,26 @@ export abstract class AbstractHandler implements Handler {
         return target instanceof HTMLElement && target.classList.contains(className);
     }
 
-    protected findContentLinks(nodes: NodeList | Element[] | Node[]) {
-        const CONTENT_LINK_CLASS_NAME = 'contentLink';
-        const res = Array.from(nodes).reduce(
+    protected findContentLinks(nodes: NodeList) {
+        return Array.from(nodes).reduce(
             (result, node) => {
                 const contentLinks =
                     node instanceof HTMLElement
-                        ? node.getElementsByClassName(CONTENT_LINK_CLASS_NAME)
+                        ? node.getElementsByClassName(AbstractHandler.CONTENT_LINK)
                         : [];
                 return [...result, ...contentLinks];
             },
             [] as Element[]
         );
-        return res;
     }
 
     protected findClosestProjectId(element: Element) {
         const project = element ? element.closest('div.project') : null;
         return project ? project.getAttribute('projectid') : null;
+    }
+
+    protected getMarkdownContentLink(nodes: NodeList) {
+        return this.findContentLinks(nodes).filter(this.isMarkdownLink);
     }
 
     protected getContentLinksIds(nodes: NodeList) {
