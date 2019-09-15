@@ -7,7 +7,7 @@ export class NodeEditedHandler extends AbstractHandler {
         // CONTENT DIV WAS EDITED
         if (
             this.anyContentLinkNodes(mutation.removedNodes) &&
-            this.targetHasNotAnyContentLinkNodes(mutation.target)
+            utils.targetHasClassName(mutation.target, 'content')
         ) {
             // GET LINK ID AND DISPATCH REMOVE ACTION
             const id = utils.findClosestProjectId(mutation.target as Element);
@@ -21,11 +21,5 @@ export class NodeEditedHandler extends AbstractHandler {
 
     private anyContentLinkNodes(nodes: NodeList) {
         return utils.anyMutations(nodes) && Array.from(nodes).some(this.isContentLink);
-    }
-
-    private targetHasNotAnyContentLinkNodes(node: Node) {
-        return (
-            utils.targetHasClassName(node, 'content') && utils.findContentLinks([node]).length === 0
-        );
     }
 }

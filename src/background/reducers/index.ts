@@ -21,13 +21,16 @@ const reducer = (state = initState, action: any): any => {
 
         case ADD_LINK: {
             const { id, url }: { id: string; url: string } = action.payload;
-            const links = {
-                ...state.links,
-                [id]: {
-                    id,
-                    url
-                }
-            };
+
+            const links = Object.keys(state.links).includes(id)
+                ? state.links
+                : {
+                      ...state.links,
+                      [id]: {
+                          id,
+                          url
+                      }
+                  };
             return {
                 ...state,
                 links

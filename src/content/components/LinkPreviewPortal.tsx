@@ -18,7 +18,10 @@ export default class extends React.Component<LinkPreviewPortalProps> {
         // TODO: fix reload bug
         const { id } = this.props;
         this.parentContainer = this.getParentContainer(id);
-        // console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
+        // console.log(
+        // 'GOINT TO APPEND PREVIEW ON LINK PARENT',
+        // document.querySelectorAll(`[projectid='${this.props.id}'] > .name`)
+        // );
         if (this.parentContainer) {
             // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
             this.parentContainer.appendChild(this.container);
@@ -27,6 +30,7 @@ export default class extends React.Component<LinkPreviewPortalProps> {
 
     getParentContainer(id: string) {
         const selector = `[projectid="${id}"] > .name`;
+        // WHY SELECT ALL?
         return document.querySelectorAll(selector).item(0);
     }
 

@@ -25,7 +25,6 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
 
     render(): JSX.Element[] {
         const { links, loadLinkPreview } = this.props;
-
         return links.map((link: any) => (
             <LinkPreviewPortal key={link.id} id={link.id}>
                 <LinkPreview {...link} loadLinkPreview={loadLinkPreview} />
