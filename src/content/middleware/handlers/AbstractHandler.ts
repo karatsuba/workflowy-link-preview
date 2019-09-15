@@ -3,6 +3,7 @@ import { Handler } from './Handler';
 
 export abstract class AbstractHandler implements Handler {
     private static readonly CONTENT_LINK = 'contentLink';
+    private static readonly MARKDOWN_LINK_REGEX = /\[.*?\]\((.*?)\)/;
 
     private nextHandler!: Handler;
     public dispatch: Dispatch;
@@ -22,13 +23,6 @@ export abstract class AbstractHandler implements Handler {
         }
     }
 
-    protected prepareLinkPayload(link: HTMLAnchorElement) {
-        return {
-            id: this.findClosestProjectId(link) || null,
-            url: (link && link.href) || null
-        };
-    }
-
     protected isContentLink(node: Node) {
         return (
             node instanceof HTMLAnchorElement &&
@@ -37,8 +31,7 @@ export abstract class AbstractHandler implements Handler {
     }
 
     protected isMarkdownLink(element: Element) {
-        const MARKDOWN_LINK_REGEX = /\[.*?\]\((.*?)\)/;
-        return MARKDOWN_LINK_REGEX.test(element.parentElement!.textContent!);
+        return AbstractHandler.MARKDOWN_LINK_REGEX.test(element.parentElement!.textContent!);
     }
 
     protected anyMutations(nodes: NodeList) {
@@ -47,6 +40,13 @@ export abstract class AbstractHandler implements Handler {
 
     protected targetHasClassName(target: Node, className: string) {
         return target instanceof HTMLElement && target.classList.contains(className);
+    }
+
+    protected prepareLinkPayload(link: HTMLAnchorElement) {
+        return {
+            id: this.findClosestProjectId(link) || null,
+            url: (link && link.href) || null
+        };
     }
 
     protected findContentLinks(nodes: NodeList) {
