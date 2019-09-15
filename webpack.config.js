@@ -1,6 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
+const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 const DIST = path.resolve(__dirname, './dist');
 const RESOURCES = path.resolve(__dirname, './resources');
@@ -34,10 +34,7 @@ const config = Object.assign({}, getBaseConfig(), {
         filename: '[name].js',
         path: DIST
     },
-    plugins: [
-        new ChromeExtensionReloader(),
-        new CopyPlugin([{ from: MANIFEST, to: DIST }])
-    ]
+    plugins: [new ChromeExtensionReloader(), new CopyPlugin([{ from: MANIFEST, to: DIST }])]
 });
 
 module.exports = config;

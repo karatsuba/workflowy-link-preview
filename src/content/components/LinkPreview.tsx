@@ -1,22 +1,29 @@
 import React from 'react';
+import Link from '../../common/models/Link';
+import { ActionWithPayload } from '../../common/actions/index';
+import { LinkPreviewPayload } from '../../common/actions/link';
 
-class LinkPreview extends React.Component<any, any> {
+type LinkPreviewProps = Link & {
+    onLoadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
+};
+
+class LinkPreview extends React.Component<LinkPreviewProps> {
     componentDidMount() {
-        const { id, url } = this.props;
-        this.props.loadLinkPreview({ id, url });
+        const { id, url, onLoadLinkPreview } = this.props;
+        onLoadLinkPreview(id, url);
     }
 
     render(): JSX.Element {
-        const { isFetching, title, image, description } = this.props;
+        const { fetching, title, imageUrl, description } = this.props;
 
-        if (isFetching) {
+        if (fetching) {
             return <div>Loading...</div>;
         }
 
         return (
             <div className='link-preview' style={{ userSelect: 'text' }}>
                 <div className='image'>
-                    <img src={image} alt='' style={{ maxWidth: '200px' }} />
+                    <img src={imageUrl} alt='' style={{ maxWidth: '200px' }} />
                 </div>
                 <h3>{title}</h3>
                 <p>{description}</p>

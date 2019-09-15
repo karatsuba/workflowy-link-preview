@@ -6,34 +6,24 @@ type LinkPreviewPortalProps = {
 };
 
 export default class extends React.Component<LinkPreviewPortalProps> {
-    private container: Element;
+    private container: Element = document.createElement('div');
     private parentContainer: Element | null = null;
 
-    constructor(props: any) {
-        super(props);
-        this.container = document.createElement('div');
-    }
-
     componentDidMount() {
-        // TODO: fix reload bug
         const { id } = this.props;
         this.parentContainer = this.getParentContainer(id);
-        // console.log('GOINT TO APPEND PREVIEW ON LINK PARENT', document.querySelectorAll(`[projectid='${this.props.id}'] > .name`));
         if (this.parentContainer) {
-            // console.log('PREVIEW LINK WAS APPENDED ON PARENT');
             this.parentContainer.appendChild(this.container);
         }
     }
 
-    getParentContainer(id: string) {
+    private getParentContainer(id: string) {
         const selector = `[projectid="${id}"] > .name`;
-        return document.querySelectorAll(selector).item(0);
+        return document.querySelector(selector);
     }
 
     componentWillUnmount() {
-        // console.log('GOINT TO REMOVE PREVIEW ON LINK PARENT');
         if (this.parentContainer) {
-            // console.log('PREVIEW LINK WAS REMOVED ON PARENT');
             this.parentContainer.removeChild(this.container);
         }
     }

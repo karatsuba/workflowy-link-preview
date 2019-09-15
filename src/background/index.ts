@@ -1,21 +1,16 @@
 import { createStore, applyMiddleware } from 'redux';
 import { wrapStore, alias } from 'webext-redux';
-import reducer from './reducer';
-
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import httpMiddleware from './middleware/httpMiddleware';
 
-const aliases = {
-    HTTP_REQUEST_ALIAS: (action: any) => {
-        return (dispatch: any) => {
-            dispatch(action.payload);
-        };
-    }
-};
+import reducer from './reducers';
+import aliases from './aliases';
 
-const middleware = [alias(aliases), thunk, httpMiddleware, logger];
-
-const store = createStore(reducer, {}, applyMiddleware(...middleware));
+// TODO: remove logger in prod mode
+const store = createStore(
+    reducer,
+    undefined,
+    applyMiddleware(alias(aliases), thunk, logger)
+);
 
 wrapStore(store);
