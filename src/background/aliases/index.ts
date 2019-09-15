@@ -1,4 +1,4 @@
-import { Action, Dispatch } from 'redux';
+import { Dispatch } from 'redux';
 import parse from '../services/parse';
 import {
     loadLinkPreview,

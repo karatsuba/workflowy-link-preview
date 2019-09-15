@@ -1,18 +1,31 @@
+import { Action } from 'redux';
+import Link from '../../common/models/Link';
 import {
     LOAD_LINK_PREVIEW,
     LOAD_LINK_PREVIEW_SUCCESS,
     OBSERVE_MUTATIONS,
     IGNORE_MUTATIONS,
     CLEAN_UP_STORE,
-    ADD_LINK
+    ADD_LINK,
+    REMOVE_LINK
 } from '../../common/actions/types';
+import addLink from './handlers/addLink';
 
-const initState = {
+export type LinksMap = {
+    [key: string]: Link;
+};
+
+export type State = {
+    links: LinksMap;
+    observingMutations: boolean;
+};
+
+const initState: State = {
     links: {},
     observingMutations: false
 };
 
-const reducer = (state = initState, action: any): any => {
+export default (state = initState, action: any): State => {
     switch (action.type) {
         case CLEAN_UP_STORE: {
             const { links = {} } = state;
@@ -20,24 +33,10 @@ const reducer = (state = initState, action: any): any => {
         }
 
         case ADD_LINK: {
-            const { id, url }: { id: string; url: string } = action.payload;
-
-            const links = Object.keys(state.links).includes(id)
-                ? state.links
-                : {
-                      ...state.links,
-                      [id]: {
-                          id,
-                          url
-                      }
-                  };
-            return {
-                ...state,
-                links
-            };
+            return addLink(state, action);
         }
 
-        case 'REMOVE_LINK': {
+        case REMOVE_LINK: {
             const { id: ids }: { id: string[] } = action.payload;
             const links = ids.reduce((links: any, id: any) => {
                 return Object.keys(links)
@@ -65,7 +64,7 @@ const reducer = (state = initState, action: any): any => {
                     ...state.links,
                     [link.id]: {
                         ...link,
-                        isFetching: true
+                        fetching: true
                     }
                 }
             };
@@ -81,7 +80,7 @@ const reducer = (state = initState, action: any): any => {
                     [link.id]: {
                         ...link,
                         ...data,
-                        isFetching: false
+                        fetching: false
                     }
                 }
             };
@@ -105,5 +104,3 @@ const reducer = (state = initState, action: any): any => {
             return state;
     }
 };
-
-export default reducer;

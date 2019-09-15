@@ -10,13 +10,7 @@ import {
     LinkPreviewPayload
 } from '../actions';
 import Link from '../../common/models/Link';
-
-type LinkPreviewerProps = {
-    links: Link[];
-    observingMutations: boolean;
-    observeMutations: () => Action;
-    loadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
-};
+import { State } from '../../background/reducers';
 
 class LinkPreviewer extends React.Component<LinkPreviewerProps> {
     componentDidMount() {
@@ -24,24 +18,37 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
     }
 
     render(): JSX.Element[] {
-        const { links, loadLinkPreview } = this.props;
-        return links.map((link: any) => (
+        const { links } = this.props;
+        return links.map((link: Link) => (
             <LinkPreviewPortal key={link.id} id={link.id}>
-                <LinkPreview {...link} loadLinkPreview={loadLinkPreview} />
+                <LinkPreview {...link} onLoadLinkPreview={this.onLoadLinkPreview} />
             </LinkPreviewPortal>
         ));
     }
+
+    onLoadLinkPreview = (id: string, url: string) => this.props.loadLinkPreview(id, url);
 }
 
-const mapStateToProps = (state: any, ownProps: any) => {
-    // console.log(state);
+const mapStateToProps = (state: State): StateProps => {
     return {
         links: Object.values<Link>(state.links),
         observingMutations: state.observingMutations
     };
 };
 
-export default connect(
+type StateProps = {
+    links: Link[];
+    observingMutations: boolean;
+};
+
+type DispatchProps = {
+    observeMutations: () => Action;
+    loadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
+};
+
+type LinkPreviewerProps = StateProps & DispatchProps;
+
+export default connect<StateProps, DispatchProps, {}, State>(
     mapStateToProps,
     {
         loadLinkPreview,
