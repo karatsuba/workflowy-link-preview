@@ -3,12 +3,8 @@ import { Action } from 'redux';
 import { connect } from 'react-redux';
 import LinkPreview from '../components/LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
-import {
-    loadLinkPreview,
-    observeMutations,
-    ActionWithPayload,
-    LinkPreviewPayload
-} from '../actions';
+import { observeMutations, ActionWithPayload } from '../../common/actions';
+import { loadLinkPreview, LinkPreviewPayload } from '../../common/actions/link';
 import Link from '../../common/models/Link';
 import { State } from '../../background/reducers';
 

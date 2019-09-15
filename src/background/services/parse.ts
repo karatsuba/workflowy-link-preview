@@ -27,9 +27,7 @@ const handleResponseAsText = (response: Response) => {
     return response.text().then((text: string) => {
         const document = parser.parseFromString(text, 'text/html');
         const props = [titleMetaProp, imageMetaProp, descriptionMetaProp];
-        const metatags = Array.from(
-            document.getElementsByTagName('meta')
-        ).filter(tag => {
+        const metatags = Array.from(document.getElementsByTagName('meta')).filter(tag => {
             const tagProp = tag.getAttribute('property') || '';
             const tagName = tag.getAttribute('name') || '';
             return (

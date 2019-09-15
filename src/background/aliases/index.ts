@@ -1,22 +1,29 @@
 import { Dispatch } from 'redux';
 import parse from '../services/parse';
 import {
-    loadLinkPreview,
+    loadLinkPreviewRequest,
     loadLinkPreviewSuccess,
-    loadLinkPreviewFailure
+    loadLinkPreviewFailure,
+    LinkPreviewPayload
 } from '../../common/actions/link';
+import { ActionWithPayload } from '../../common/actions';
 import { LOAD_LINK_PREVIEW_ALIAS } from '../../common/actions/types';
+import Link from '../../common/models/Link';
 
-const loadLinkPreviewAlias = (action: any) => (dispatch: Dispatch) => {
+const alias = (action: ActionWithPayload<LinkPreviewPayload>) => (dispatch: Dispatch) => {
     const { url, id } = action.payload;
 
-    dispatch(loadLinkPreview(id));
+    dispatch(loadLinkPreviewRequest(id));
 
     parse(url)
-        .then(data => dispatch(loadLinkPreviewSuccess(id, data)))
-        .catch(error => dispatch(loadLinkPreviewFailure(id, error)));
+        .then(({ title, description, imageUrl }) =>
+            dispatch(loadLinkPreviewSuccess(new Link(id, url, title, description, imageUrl)))
+        )
+        .catch(({ message }: Error) =>
+            dispatch(loadLinkPreviewFailure(new Link(id, url, message)))
+        );
 };
 
 export default {
-    [LOAD_LINK_PREVIEW_ALIAS]: loadLinkPreviewAlias
+    [LOAD_LINK_PREVIEW_ALIAS]: alias
 };

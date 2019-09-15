@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from '../../common/models/Link';
-import { ActionWithPayload, LinkPreviewPayload } from '../actions/index';
+import { ActionWithPayload } from '../../common/actions/index';
+import { LinkPreviewPayload } from '../../common/actions/link';
 
 type LinkPreviewProps = Link & {
     onLoadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;

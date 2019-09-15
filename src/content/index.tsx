@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Store } from 'webext-redux';
 import store from './store';
-import { cleanUpStore } from './actions/index';
+import { cleanUpStore } from '../common/actions/index';
 import LinkPreviewer from './conteiners/LinkPreviewer';
 
 const cleanUpBackgroundStore = ({ dispatch }: Store) => () => dispatch(cleanUpStore());

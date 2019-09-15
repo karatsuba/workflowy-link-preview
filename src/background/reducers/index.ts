@@ -1,15 +1,22 @@
 import { Action } from 'redux';
 import Link from '../../common/models/Link';
 import {
-    LOAD_LINK_PREVIEW,
+    LOAD_LINK_PREVIEW_REQUEST,
     LOAD_LINK_PREVIEW_SUCCESS,
     OBSERVE_MUTATIONS,
     IGNORE_MUTATIONS,
     CLEAN_UP_STORE,
     ADD_LINK,
-    REMOVE_LINK
+    REMOVE_LINK,
+    LOAD_LINK_PREVIEW_FAILURE
 } from '../../common/actions/types';
 import addLink from './handlers/addLink';
+import removeLink from './handlers/removeLink';
+import loadLinkPreviewRequest from './handlers/loadLinkPreviewRequest';
+import loadLinkPreviewSuccess from './handlers/loadLinkPreviewSuccess';
+import loadLinkPreviewFailure from './handlers/loadLinkPreviewFailure';
+import { ActionWithPayload } from '../../common/actions/';
+import { LinkPreviewRequestPayload } from '../../common/actions/link';
 
 export type LinksMap = {
     [key: string]: Link;
@@ -25,7 +32,7 @@ const initState: State = {
     observingMutations: false
 };
 
-export default (state = initState, action: any): State => {
+export default (state = initState, action: Action): State => {
     switch (action.type) {
         case CLEAN_UP_STORE: {
             const { links = {} } = state;
@@ -37,53 +44,19 @@ export default (state = initState, action: any): State => {
         }
 
         case REMOVE_LINK: {
-            const { id: ids }: { id: string[] } = action.payload;
-            const links = ids.reduce((links: any, id: any) => {
-                return Object.keys(links)
-                    .filter(linkId => linkId !== id)
-                    .reduce(
-                        (result, linkId) => {
-                            result[linkId] = links[linkId];
-                            return result;
-                        },
-                        {} as any
-                    );
-            }, state.links);
-            return {
-                ...state,
-                links
-            };
+            return removeLink(state, action);
         }
 
-        case LOAD_LINK_PREVIEW: {
-            const { id } = action.payload;
-            const link = (state.links as any)[id];
-            return {
-                ...state,
-                links: {
-                    ...state.links,
-                    [link.id]: {
-                        ...link,
-                        fetching: true
-                    }
-                }
-            };
+        case LOAD_LINK_PREVIEW_REQUEST: {
+            return loadLinkPreviewRequest(state, action);
         }
 
         case LOAD_LINK_PREVIEW_SUCCESS: {
-            const { id, ...data } = action.payload;
-            const link = (state.links as any)[id];
-            return {
-                ...state,
-                links: {
-                    ...state.links,
-                    [link.id]: {
-                        ...link,
-                        ...data,
-                        fetching: false
-                    }
-                }
-            };
+            return loadLinkPreviewSuccess(state, action);
+        }
+
+        case LOAD_LINK_PREVIEW_FAILURE: {
+            return loadLinkPreviewFailure(state, action);
         }
 
         case OBSERVE_MUTATIONS: {
