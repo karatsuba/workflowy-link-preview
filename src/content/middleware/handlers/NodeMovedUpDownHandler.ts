@@ -1,12 +1,11 @@
 import { AbstractHandler } from './AbstractHandler';
-import * as utils from './utils';
 import { addLink } from '../actions';
 
 export class NodeMovedUpDownHandler extends AbstractHandler {
     public handle(mutation: MutationRecord): void {
         if (
-            utils.anyMutations(mutation.addedNodes) &&
-            utils.targetHasClassName(mutation.target, 'children')
+            this.anyMutations(mutation.addedNodes) &&
+            this.targetHasClassName(mutation.target, 'children')
         ) {
             // CHILDREN NODE WAS MOVED (ADDED) WITH UP/DOWN ARROWS
             const [link] = this.getMarkdownContentLink(mutation.addedNodes);

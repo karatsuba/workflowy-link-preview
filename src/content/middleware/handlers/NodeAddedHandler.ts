@@ -1,12 +1,11 @@
 import { AbstractHandler } from './AbstractHandler';
-import * as utils from './utils';
 import { addLink } from '../actions';
 
 export class NodeAddedHandler extends AbstractHandler {
     public handle(mutation: MutationRecord): void {
         if (
-            utils.anyMutations(mutation.addedNodes) &&
-            utils.targetHasClassName(mutation.target, 'content')
+            this.anyMutations(mutation.addedNodes) &&
+            this.targetHasClassName(mutation.target, 'content')
         ) {
             // CONTENT LINK WAS ADDED
             const [link] = this.getContentLink(mutation.addedNodes);
@@ -21,7 +20,11 @@ export class NodeAddedHandler extends AbstractHandler {
         super.handle(mutation);
     }
 
+    private isConnectedContentLink(node: Node) {
+        return this.isContentLink(node) && node.isConnected;
+    }
+
     private getContentLink(nodes: NodeList) {
-        return Array.from(nodes).filter(utils.isContentLink);
+        return Array.from(nodes).filter(this.isConnectedContentLink.bind(this));
     }
 }
