@@ -1,5 +1,5 @@
 import { AbstractHandler } from './AbstractHandler';
-import { addLink } from '../actions';
+import { addLink } from '../../../common/actions/link';
 
 export class NodeAddedHandler extends AbstractHandler {
     public handle(mutation: MutationRecord): void {

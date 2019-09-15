@@ -2,7 +2,9 @@ import {
     LOAD_LINK_PREVIEW_REQUEST,
     LOAD_LINK_PREVIEW_SUCCESS,
     LOAD_LINK_PREVIEW_FAILURE,
-    LOAD_LINK_PREVIEW_ALIAS
+    LOAD_LINK_PREVIEW_ALIAS,
+    ADD_LINK,
+    REMOVE_LINK
 } from './types';
 import Link from '../models/Link';
 import { ActionWithPayload } from './index';
@@ -41,5 +43,20 @@ export const loadLinkPreviewFailure = (link: Link): ActionWithPayload<{ link: Li
     type: LOAD_LINK_PREVIEW_FAILURE,
     payload: {
         link
+    }
+});
+
+export const addLink = (id: string, url: string) => ({
+    type: ADD_LINK,
+    payload: {
+        id,
+        url
+    }
+});
+
+export const removeLink = (id: string) => ({
+    type: REMOVE_LINK,
+    payload: {
+        id
     }
 });
