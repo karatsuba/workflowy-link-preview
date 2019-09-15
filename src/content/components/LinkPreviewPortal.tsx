@@ -6,13 +6,8 @@ type LinkPreviewPortalProps = {
 };
 
 export default class extends React.Component<LinkPreviewPortalProps> {
-    private container: Element;
+    private container: Element = document.createElement('div');
     private parentContainer: Element | null = null;
-
-    constructor(props: any) {
-        super(props);
-        this.container = document.createElement('div');
-    }
 
     componentDidMount() {
         const { id } = this.props;

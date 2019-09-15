@@ -12,7 +12,7 @@ export class NodeEditedHandler extends AbstractHandler {
             // GET LINK ID AND DISPATCH REMOVE ACTION
             const id = utils.findClosestProjectId(mutation.target as Element);
             if (id) {
-                this.dispatch(removeLink([id]));
+                this.dispatch(removeLink(id));
             }
         }
 

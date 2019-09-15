@@ -10,7 +10,7 @@ export class NodeBulletClickHandler extends AbstractHandler {
             utils.targetHasClassName(mutation.target, 'page')
         ) {
             const ids = this.getContentLinksIds(mutation.removedNodes);
-            ids.forEach(id => id && this.dispatch(removeLink([id])));
+            ids.forEach(id => id && this.dispatch(removeLink(id)));
         }
 
         super.handle(mutation);

@@ -10,7 +10,7 @@ export class NodeCollapsedHandler extends AbstractHandler {
             utils.targetHasClassName(mutation.target, 'project')
         ) {
             const ids = this.getContentLinksIds(mutation.removedNodes);
-            ids.forEach(id => id && this.dispatch(removeLink([id])));
+            ids.forEach(id => id && this.dispatch(removeLink(id)));
         }
 
         super.handle(mutation);

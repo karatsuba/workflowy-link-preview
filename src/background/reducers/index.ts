@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import Link from '../../common/models/Link';
 import {
     LOAD_LINK_PREVIEW_REQUEST,
@@ -15,8 +14,6 @@ import removeLink from './handlers/removeLink';
 import loadLinkPreviewRequest from './handlers/loadLinkPreviewRequest';
 import loadLinkPreviewSuccess from './handlers/loadLinkPreviewSuccess';
 import loadLinkPreviewFailure from './handlers/loadLinkPreviewFailure';
-import { ActionWithPayload } from '../../common/actions/';
-import { LinkPreviewRequestPayload } from '../../common/actions/link';
 
 export type LinksMap = {
     [key: string]: Link;
@@ -32,7 +29,8 @@ const initState: State = {
     observingMutations: false
 };
 
-export default (state = initState, action: Action): State => {
+// TODO: fix action type
+export default (state = initState, action: any): State => {
     switch (action.type) {
         case CLEAN_UP_STORE: {
             const { links = {} } = state;

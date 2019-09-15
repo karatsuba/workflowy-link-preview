@@ -8,7 +8,7 @@ export const addLink = (id: string, url: string) => ({
     }
 });
 
-export const removeLink = (id: string[]) => ({
+export const removeLink = (id: string) => ({
     type: REMOVE_LINK,
     payload: {
         id
