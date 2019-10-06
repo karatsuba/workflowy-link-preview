@@ -2,7 +2,7 @@ import React from 'react';
 import Link from '../../common/models/Link';
 import { ActionWithPayload } from '../../common/actions/index';
 import { LinkPreviewPayload } from '../../common/actions/link';
-import * as StyledLinkPreview from './LinkPreview.styles';
+import * as Styled from './LinkPreview.styles';
 
 type LinkPreviewProps = Link & {
     onLoadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
@@ -22,17 +22,17 @@ class LinkPreview extends React.Component<LinkPreviewProps> {
         }
 
         return (
-            <StyledLinkPreview.Container>
-                <StyledLinkPreview.Row>
-                    <StyledLinkPreview.Column>
-                        <StyledLinkPreview.Image src={imageUrl} alt='' />
-                    </StyledLinkPreview.Column>
-                    <StyledLinkPreview.Column>
-                        <h2>{title}</h2>
+            <Styled.Container>
+                <Styled.Row>
+                    <Styled.Column>
+                        <Styled.Image src={imageUrl} alt='' />
+                    </Styled.Column>
+                    <Styled.Column>
+                        <Styled.Title>{title}</Styled.Title>
                         <span>{description}</span>
-                    </StyledLinkPreview.Column>
-                </StyledLinkPreview.Row>
-            </StyledLinkPreview.Container>
+                    </Styled.Column>
+                </Styled.Row>
+            </Styled.Container>
         );
     }
 }
