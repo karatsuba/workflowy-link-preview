@@ -2,6 +2,7 @@ import React from 'react';
 import Link from '../../common/models/Link';
 import { ActionWithPayload } from '../../common/actions/index';
 import { LinkPreviewPayload } from '../../common/actions/link';
+import * as LinkPreviewStyled from './LinkPreview.styles';
 
 type LinkPreviewProps = Link & {
     onLoadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
@@ -21,13 +22,17 @@ class LinkPreview extends React.Component<LinkPreviewProps> {
         }
 
         return (
-            <div className='link-preview' style={{ userSelect: 'text' }}>
-                <div className='image'>
-                    <img src={imageUrl} alt='' style={{ maxWidth: '200px' }} />
-                </div>
-                <h3>{title}</h3>
-                <p>{description}</p>
-            </div>
+            <LinkPreviewStyled.Container>
+                <LinkPreviewStyled.Row>
+                    <LinkPreviewStyled.Column>
+                        <LinkPreviewStyled.Image src={imageUrl} alt='' />
+                    </LinkPreviewStyled.Column>
+                    <LinkPreviewStyled.Column>
+                        <LinkPreviewStyled.Title>{title}</LinkPreviewStyled.Title>
+                        <span>{description}</span>
+                    </LinkPreviewStyled.Column>
+                </LinkPreviewStyled.Row>
+            </LinkPreviewStyled.Container>
         );
     }
 }
