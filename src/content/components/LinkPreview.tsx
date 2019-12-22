@@ -23,13 +23,17 @@ class LinkPreview extends React.Component<LinkPreviewProps> {
         return (
             <LinkPreviewStyled.Container>
                 <LinkPreviewStyled.Row>
-                    <LinkPreviewStyled.Column>
-                        <LinkPreviewStyled.Image src={imageUrl} alt='' />
-                    </LinkPreviewStyled.Column>
-                    <LinkPreviewStyled.Column>
-                        <LinkPreviewStyled.Title>{title}</LinkPreviewStyled.Title>
-                        <span>{description}</span>
-                    </LinkPreviewStyled.Column>
+                    {imageUrl && (
+                        <LinkPreviewStyled.Column>
+                            <LinkPreviewStyled.Image src={imageUrl} alt='' />
+                        </LinkPreviewStyled.Column>
+                    )}
+                    {(title || description) && (
+                        <LinkPreviewStyled.Column>
+                            <LinkPreviewStyled.Title>{title}</LinkPreviewStyled.Title>
+                            <span>{description}</span>
+                        </LinkPreviewStyled.Column>
+                    )}
                 </LinkPreviewStyled.Row>
             </LinkPreviewStyled.Container>
         );
