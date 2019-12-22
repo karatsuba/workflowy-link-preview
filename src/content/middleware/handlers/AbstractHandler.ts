@@ -3,7 +3,7 @@ import { Handler } from './Handler';
 
 export abstract class AbstractHandler implements Handler {
     private static readonly CONTENT_LINK = 'contentLink';
-    private static readonly MARKDOWN_LINK_REGEX = /\[.*?\]\((.*?)\)/;
+    private static readonly MARKDOWN_LINK_REGEX = /\!\((.*?)\)/;
 
     private nextHandler!: Handler;
     public dispatch: Dispatch;
