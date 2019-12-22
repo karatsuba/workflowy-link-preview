@@ -4,18 +4,12 @@ import {
     LOAD_LINK_PREVIEW_FAILURE,
     LOAD_LINK_PREVIEW_ALIAS,
     ADD_LINK,
-    REMOVE_LINK
+    REMOVE_LINK,
+    CommonActions
 } from './types';
 import Link from '../models/Link';
-import { ActionWithPayload } from './index';
 
-export type LinkPreviewRequestPayload = Pick<Link, 'id'>;
-export type LinkPreviewPayload = Pick<Link, 'id' | 'url'>;
-
-export const loadLinkPreview = (
-    id: string,
-    url: string
-): ActionWithPayload<LinkPreviewPayload> => ({
+export const loadLinkPreview = (id: string, url: string): CommonActions => ({
     type: LOAD_LINK_PREVIEW_ALIAS,
     payload: {
         id,
@@ -23,30 +17,24 @@ export const loadLinkPreview = (
     }
 });
 
-export const loadLinkPreviewRequest = (
-    id: string
-): ActionWithPayload<LinkPreviewRequestPayload> => ({
+export const loadLinkPreviewRequest = (id: string): CommonActions => ({
     type: LOAD_LINK_PREVIEW_REQUEST,
     payload: {
         id
     }
 });
 
-export const loadLinkPreviewSuccess = (link: Link): ActionWithPayload<{ link: Link }> => ({
+export const loadLinkPreviewSuccess = (link: Link): CommonActions => ({
     type: LOAD_LINK_PREVIEW_SUCCESS,
-    payload: {
-        link
-    }
+    payload: link
 });
 
-export const loadLinkPreviewFailure = (link: Link): ActionWithPayload<{ link: Link }> => ({
+export const loadLinkPreviewFailure = (link: Link): CommonActions => ({
     type: LOAD_LINK_PREVIEW_FAILURE,
-    payload: {
-        link
-    }
+    payload: link
 });
 
-export const addLink = (id: string, url: string) => ({
+export const addLink = (id: string, url: string): CommonActions => ({
     type: ADD_LINK,
     payload: {
         id,
@@ -54,7 +42,7 @@ export const addLink = (id: string, url: string) => ({
     }
 });
 
-export const removeLink = (id: string) => ({
+export const removeLink = (id: string): CommonActions => ({
     type: REMOVE_LINK,
     payload: {
         id

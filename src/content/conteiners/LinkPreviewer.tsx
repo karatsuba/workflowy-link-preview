@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Action } from 'redux';
 import { connect } from 'react-redux';
 import LinkPreview from '../components/LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
-import { observeMutations, ActionWithPayload } from '../../common/actions';
-import { loadLinkPreview, LinkPreviewPayload } from '../../common/actions/link';
+import { CommonActions } from '../../common/actions/types';
+import { loadLinkPreview } from '../../common/actions/link';
+import { observeMutations } from '../../common/actions';
 import Link from '../../common/models/Link';
 import { State } from '../../background/reducers';
 
@@ -13,7 +13,9 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
         this.props.observeMutations();
     }
 
-    render(): JSX.Element[] {
+    onLoadLinkPreview = (id: string, url: string) => this.props.loadLinkPreview(id, url);
+
+    render() {
         const { links } = this.props;
         return links.map((link: Link) => (
             <LinkPreviewPortal key={link.id} id={link.id}>
@@ -21,8 +23,6 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
             </LinkPreviewPortal>
         ));
     }
-
-    onLoadLinkPreview = (id: string, url: string) => this.props.loadLinkPreview(id, url);
 }
 
 const mapStateToProps = (state: State): StateProps => {
@@ -38,8 +38,8 @@ type StateProps = {
 };
 
 type DispatchProps = {
-    observeMutations: () => Action;
-    loadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
+    observeMutations: () => CommonActions;
+    loadLinkPreview: (id: string, url: string) => CommonActions;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;

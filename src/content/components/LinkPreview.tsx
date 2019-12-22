@@ -1,11 +1,10 @@
 import React from 'react';
 import Link from '../../common/models/Link';
-import { ActionWithPayload } from '../../common/actions/index';
-import { LinkPreviewPayload } from '../../common/actions/link';
+import { CommonActions } from '../../common/actions/types';
 import * as LinkPreviewStyled from './LinkPreview.styles';
 
 type LinkPreviewProps = Link & {
-    onLoadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
+    onLoadLinkPreview: (id: string, url: string) => CommonActions;
 };
 
 class LinkPreview extends React.Component<LinkPreviewProps> {

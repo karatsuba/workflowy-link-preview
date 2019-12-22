@@ -1,23 +1,13 @@
-import { Action } from 'redux';
-import {
-    LOAD_LINK_PREVIEW_ALIAS,
-    OBSERVE_MUTATIONS,
-    IGNORE_MUTATIONS,
-    CLEAN_UP_STORE
-} from './types';
+import { OBSERVE_MUTATIONS, IGNORE_MUTATIONS, CLEAN_UP_STORE, CommonActions } from './types';
 
-export type ActionWithPayload<P> = Action & {
-    payload: P;
-};
-
-export const observeMutations = (): Action => ({
+export const observeMutations = (): CommonActions => ({
     type: OBSERVE_MUTATIONS
 });
 
-export const ignoreMutations = (): Action => ({
+export const ignoreMutations = (): CommonActions => ({
     type: IGNORE_MUTATIONS
 });
 
-export const cleanUpStore = (): Action => ({
+export const cleanUpStore = (): CommonActions => ({
     type: CLEAN_UP_STORE
 });

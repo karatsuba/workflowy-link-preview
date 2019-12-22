@@ -7,7 +7,8 @@ import {
     CLEAN_UP_STORE,
     ADD_LINK,
     REMOVE_LINK,
-    LOAD_LINK_PREVIEW_FAILURE
+    LOAD_LINK_PREVIEW_FAILURE,
+    CommonActions
 } from '../../common/actions/types';
 import addLink from './handlers/addLink';
 import removeLink from './handlers/removeLink';
@@ -29,8 +30,7 @@ const initState: State = {
     observingMutations: false
 };
 
-// TODO: fix action type
-export default (state = initState, action: any): State => {
+export default (state = initState, action: CommonActions): State => {
     switch (action.type) {
         case CLEAN_UP_STORE: {
             const { links = {} } = state;
