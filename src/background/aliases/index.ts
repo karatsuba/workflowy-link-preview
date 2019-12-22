@@ -1,16 +1,14 @@
 import { Dispatch } from 'redux';
 import parse from '../services/parse';
+import Link from '../../common/models/Link';
 import {
     loadLinkPreviewRequest,
     loadLinkPreviewSuccess,
-    loadLinkPreviewFailure,
-    LinkPreviewPayload
+    loadLinkPreviewFailure
 } from '../../common/actions/link';
-import { ActionWithPayload } from '../../common/actions';
-import { LOAD_LINK_PREVIEW_ALIAS } from '../../common/actions/types';
-import Link from '../../common/models/Link';
+import { LoadLinkPreviewAction, LOAD_LINK_PREVIEW_ALIAS } from '../../common/actions/types';
 
-const alias = (action: ActionWithPayload<LinkPreviewPayload>) => (dispatch: Dispatch) => {
+const alias = (action: LoadLinkPreviewAction) => (dispatch: Dispatch) => {
     const { url, id } = action.payload;
 
     dispatch(loadLinkPreviewRequest(id));

@@ -1,8 +1,7 @@
 import { State } from '../../reducers/index';
-import { ActionWithPayload } from '../../../common/actions/';
-import { LinkPreviewRequestPayload } from '../../../common/actions/link';
+import { LoadLinkPreviewRequestAction } from '../../../common/actions/types';
 
-export default (state: State, action: ActionWithPayload<LinkPreviewRequestPayload>) => {
+export default (state: State, action: LoadLinkPreviewRequestAction) => {
     const { id } = action.payload;
     const link = state.links[id];
     const links = {
@@ -12,6 +11,7 @@ export default (state: State, action: ActionWithPayload<LinkPreviewRequestPayloa
             fetching: true
         }
     };
+
     return {
         ...state,
         links

@@ -1,11 +1,10 @@
 import React from 'react';
 import Link from '../../common/models/Link';
-import { ActionWithPayload } from '../../common/actions/index';
-import { LinkPreviewPayload } from '../../common/actions/link';
+import { CommonActions } from '../../common/actions/types';
 import * as LinkPreviewStyled from './LinkPreview.styles';
 
 type LinkPreviewProps = Link & {
-    onLoadLinkPreview: (id: string, url: string) => ActionWithPayload<LinkPreviewPayload>;
+    onLoadLinkPreview: (id: string, url: string) => CommonActions;
 };
 
 class LinkPreview extends React.Component<LinkPreviewProps> {
@@ -24,13 +23,17 @@ class LinkPreview extends React.Component<LinkPreviewProps> {
         return (
             <LinkPreviewStyled.Container>
                 <LinkPreviewStyled.Row>
-                    <LinkPreviewStyled.Column>
-                        <LinkPreviewStyled.Image src={imageUrl} alt='' />
-                    </LinkPreviewStyled.Column>
-                    <LinkPreviewStyled.Column>
-                        <LinkPreviewStyled.Title>{title}</LinkPreviewStyled.Title>
-                        <span>{description}</span>
-                    </LinkPreviewStyled.Column>
+                    {imageUrl && (
+                        <LinkPreviewStyled.Column>
+                            <LinkPreviewStyled.Image src={imageUrl} alt='' />
+                        </LinkPreviewStyled.Column>
+                    )}
+                    {(title || description) && (
+                        <LinkPreviewStyled.Column>
+                            <LinkPreviewStyled.Title>{title}</LinkPreviewStyled.Title>
+                            <span>{description}</span>
+                        </LinkPreviewStyled.Column>
+                    )}
                 </LinkPreviewStyled.Row>
             </LinkPreviewStyled.Container>
         );

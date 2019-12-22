@@ -1,9 +1,8 @@
 import { State } from '../../reducers/index';
-import { ActionWithPayload } from '../../../common/actions/';
-import Link from '../../../common/models/Link';
+import { LoadLinkPreviewSuccessAction } from '../../../common/actions/types';
 
-export default (state: State, action: ActionWithPayload<{ link: Link }>) => {
-    const { link } = action.payload;
+export default (state: State, action: LoadLinkPreviewSuccessAction) => {
+    const link = action.payload;
     const links = {
         ...state.links,
         [link.id]: {
@@ -11,6 +10,7 @@ export default (state: State, action: ActionWithPayload<{ link: Link }>) => {
             fetching: false
         }
     };
+
     return {
         ...state,
         links
