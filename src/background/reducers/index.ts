@@ -16,14 +16,14 @@ import loadLinkPreviewRequest from './handlers/loadLinkPreviewRequest';
 import loadLinkPreviewSuccess from './handlers/loadLinkPreviewSuccess';
 import loadLinkPreviewFailure from './handlers/loadLinkPreviewFailure';
 
-export type LinksMap = {
+export type LinksMap = Readonly<{
     [key: string]: Link;
-};
+}>;
 
-export type State = {
+export type State = Readonly<{
     links: LinksMap;
     observingMutations: boolean;
-};
+}>;
 
 const initState: State = {
     links: {},
