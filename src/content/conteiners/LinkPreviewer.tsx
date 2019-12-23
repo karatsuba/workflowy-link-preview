@@ -8,7 +8,7 @@ import { observeMutations } from '../../common/actions';
 import Link from '../../common/models/Link';
 import { State } from '../../background/reducers';
 
-class LinkPreviewer extends React.Component<LinkPreviewerProps> {
+class LinkPreviewer extends React.PureComponent<LinkPreviewerProps> {
     componentDidMount() {
         this.props.observeMutations();
     }

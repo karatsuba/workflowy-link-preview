@@ -7,13 +7,13 @@ type LinkPreviewProps = Link & {
     onLoadLinkPreview: (id: string, url: string) => CommonActions;
 };
 
-class LinkPreview extends React.Component<LinkPreviewProps> {
+class LinkPreview extends React.PureComponent<LinkPreviewProps> {
     componentDidMount() {
         const { id, url, onLoadLinkPreview } = this.props;
         onLoadLinkPreview(id, url);
     }
 
-    render(): JSX.Element {
+    render() {
         const { fetching, title, imageUrl, description } = this.props;
 
         if (fetching) {
