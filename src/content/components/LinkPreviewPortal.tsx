@@ -18,7 +18,7 @@ export default class extends React.Component<LinkPreviewPortalProps> {
     }
 
     shouldComponentUpdate(nextProps: LinkPreviewPortalProps): boolean {
-        return nextProps.id !== this.props.id;
+        return this.props.id !== nextProps.id;
     }
 
     private getParentContainer(id: string): Element | null {
