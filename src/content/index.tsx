@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Store } from 'webext-redux';
 import store from './store';
-import { cleanUpStore } from '../common/actions/index';
+import { resetStore } from '../common/actions/index';
 import LinkPreviewer from './conteiners/LinkPreviewer';
 
-const cleanUpBackgroundStore = ({ dispatch }: Store) => () => dispatch(cleanUpStore());
+const resetBackgroundPageStore = ({ dispatch }: Store) => () => dispatch(resetStore());
 
 const initReactApp = (store: Store) => () => {
     return ReactDOM.render(
@@ -19,5 +19,5 @@ const initReactApp = (store: Store) => () => {
 
 store
     .ready()
-    .then(cleanUpBackgroundStore(store))
+    .then(resetBackgroundPageStore(store))
     .then(initReactApp(store));
