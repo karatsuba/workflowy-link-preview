@@ -54,10 +54,10 @@ export type IgnoreMutationAction = {
     type: typeof IGNORE_MUTATIONS;
 };
 
-export const CLEAN_UP_STORE = 'CLEAN_UP_STORE';
+export const RESET_STORE = 'RESET_STORE';
 
-export type CleanUpStoreAction = {
-    type: typeof CLEAN_UP_STORE;
+export type ResetStoreAction = {
+    type: typeof RESET_STORE;
 };
 
 export type CommonActions =
@@ -69,4 +69,4 @@ export type CommonActions =
     | RemoveLinkAction
     | ObserveMutationAction
     | IgnoreMutationAction
-    | CleanUpStoreAction;
+    | ResetStoreAction;

@@ -9,7 +9,7 @@ export default class extends React.Component<LinkPreviewPortalProps> {
     private container: Element = document.createElement('div');
     private parentContainer: Element | null = null;
 
-    componentDidMount() {
+    componentDidMount(): void {
         const { id } = this.props;
         this.parentContainer = this.getParentContainer(id);
         if (this.parentContainer) {
@@ -17,12 +17,16 @@ export default class extends React.Component<LinkPreviewPortalProps> {
         }
     }
 
-    private getParentContainer(id: string) {
+    shouldComponentUpdate(nextProps: LinkPreviewPortalProps): boolean {
+        return this.props.id !== nextProps.id;
+    }
+
+    private getParentContainer(id: string): Element | null {
         const selector = `[projectid="${id}"] > .name`;
         return document.querySelector(selector);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         if (this.parentContainer) {
             this.parentContainer.removeChild(this.container);
         }

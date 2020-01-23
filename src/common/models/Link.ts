@@ -14,4 +14,15 @@ export default class Link {
         this.title = title;
         this.imageUrl = imageUrl;
     }
+
+    static isEqual(thisLink: Link, thatLink: Link): boolean {
+        return (
+            thisLink.id === thatLink.id &&
+            thisLink.url === thatLink.url &&
+            thisLink.fetching === thatLink.fetching &&
+            thisLink.description === thatLink.description &&
+            thisLink.title === thatLink.title &&
+            thisLink.imageUrl === thatLink.imageUrl
+        );
+    }
 }
