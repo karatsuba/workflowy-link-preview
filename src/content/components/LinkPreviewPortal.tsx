@@ -5,11 +5,11 @@ type LinkPreviewPortalProps = {
     id: string;
 };
 
-export default class extends React.PureComponent<LinkPreviewPortalProps> {
+export default class extends React.Component<LinkPreviewPortalProps> {
     private container: Element = document.createElement('div');
     private parentContainer: Element | null = null;
 
-    componentDidMount() {
+    componentDidMount(): void {
         const { id } = this.props;
         this.parentContainer = this.getParentContainer(id);
         if (this.parentContainer) {
@@ -17,18 +17,22 @@ export default class extends React.PureComponent<LinkPreviewPortalProps> {
         }
     }
 
-    private getParentContainer(id: string) {
+    shouldComponentUpdate(nextProps: LinkPreviewPortalProps): boolean {
+        return nextProps.id !== this.props.id;
+    }
+
+    private getParentContainer(id: string): Element | null {
         const selector = `[projectid="${id}"] > .name`;
         return document.querySelector(selector);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         if (this.parentContainer) {
             this.parentContainer.removeChild(this.container);
         }
     }
 
-    render() {
+    render(): JSX.Element {
         const { children } = this.props;
         return ReactDOM.createPortal(children, this.container);
     }

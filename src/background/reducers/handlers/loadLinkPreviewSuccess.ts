@@ -3,8 +3,9 @@ import { LoadLinkPreviewSuccessAction } from '../../../common/actions/types';
 
 export default (state: State, action: LoadLinkPreviewSuccessAction) => {
     const link = action.payload;
-    const links = {
-        ...state.links,
+
+    const byId = {
+        ...state.links.byId,
         [link.id]: {
             ...link,
             fetching: false
@@ -13,6 +14,9 @@ export default (state: State, action: LoadLinkPreviewSuccessAction) => {
 
     return {
         ...state,
-        links
+        links: {
+            ...state.links,
+            byId
+        }
     };
 };

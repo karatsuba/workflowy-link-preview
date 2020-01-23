@@ -4,10 +4,14 @@ import { RemoveLinkAction } from '../../../common/actions/types';
 export default (state: State, action: RemoveLinkAction) => {
     const { id } = action.payload;
 
-    const entries = Object.entries(state.links).filter(([linkId]) => linkId !== id);
+    const { [id]: value, ...byId } = state.links.byId;
+    const allIds = state.links.allIds.filter(i => i !== id);
 
     return {
         ...state,
-        links: Object.fromEntries(entries)
+        links: {
+            byId,
+            allIds
+        }
     };
 };

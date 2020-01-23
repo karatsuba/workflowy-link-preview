@@ -20,13 +20,21 @@ export type LinksMap = Readonly<{
     [key: string]: Link;
 }>;
 
+export type LinksEntities = Readonly<{
+    byId: LinksMap;
+    allIds: string[];
+}>;
+
 export type State = Readonly<{
-    links: LinksMap;
+    links: LinksEntities;
     observingMutations: boolean;
 }>;
 
 const initState: State = {
-    links: {},
+    links: {
+        byId: {},
+        allIds: []
+    },
     observingMutations: false
 };
 

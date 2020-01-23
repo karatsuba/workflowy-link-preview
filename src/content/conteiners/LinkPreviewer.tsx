@@ -1,45 +1,44 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import LinkPreview from '../components/LinkPreview';
+import LinkPreview from './LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
 import { CommonActions } from '../../common/actions/types';
-import { loadLinkPreview } from '../../common/actions/link';
 import { observeMutations } from '../../common/actions';
-import Link from '../../common/models/Link';
 import { State } from '../../background/reducers';
+import { getLinksIds } from '../selectors';
 
-class LinkPreviewer extends React.PureComponent<LinkPreviewerProps> {
-    componentDidMount() {
+class LinkPreviewer extends React.Component<LinkPreviewerProps> {
+    componentDidMount(): void {
         this.props.observeMutations();
     }
 
-    onLoadLinkPreview = (id: string, url: string) => this.props.loadLinkPreview(id, url);
+    shouldComponentUpdate(nextProps: LinkPreviewerProps): boolean {
+        return (
+            this.props.linksIds.length !== nextProps.linksIds.length ||
+            this.props.linksIds.every((id, i) => id !== nextProps.linksIds[i])
+        );
+    }
 
-    render() {
-        const { links } = this.props;
-        return links.map((link: Link) => (
-            <LinkPreviewPortal key={link.id} id={link.id}>
-                <LinkPreview {...link} onLoadLinkPreview={this.onLoadLinkPreview} />
+    render(): JSX.Element[] {
+        const { linksIds } = this.props;
+        return linksIds.map(id => (
+            <LinkPreviewPortal key={id} id={id}>
+                <LinkPreview linkId={id} />
             </LinkPreviewPortal>
         ));
     }
 }
 
-const mapStateToProps = (state: State): StateProps => {
-    return {
-        links: Object.values<Link>(state.links),
-        observingMutations: state.observingMutations
-    };
-};
+const mapStateToProps = (state: State): StateProps => ({
+    linksIds: getLinksIds(state)
+});
 
 type StateProps = {
-    links: Link[];
-    observingMutations: boolean;
+    linksIds: string[];
 };
 
 type DispatchProps = {
     observeMutations: () => CommonActions;
-    loadLinkPreview: (id: string, url: string) => CommonActions;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;
@@ -47,7 +46,6 @@ type LinkPreviewerProps = StateProps & DispatchProps;
 export default connect<StateProps, DispatchProps, {}, State>(
     mapStateToProps,
     {
-        loadLinkPreview,
         observeMutations
     }
 )(LinkPreviewer);

@@ -3,9 +3,10 @@ import { LoadLinkPreviewRequestAction } from '../../../common/actions/types';
 
 export default (state: State, action: LoadLinkPreviewRequestAction) => {
     const { id } = action.payload;
-    const link = state.links[id];
-    const links = {
-        ...state.links,
+    const link = state.links.byId[id];
+
+    const byId = {
+        ...state.links.byId,
         [link.id]: {
             ...link,
             fetching: true
@@ -14,6 +15,9 @@ export default (state: State, action: LoadLinkPreviewRequestAction) => {
 
     return {
         ...state,
-        links
+        links: {
+            ...state.links,
+            byId
+        }
     };
 };
