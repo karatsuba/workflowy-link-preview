@@ -50,16 +50,13 @@ export abstract class AbstractHandler implements Handler {
     }
 
     protected findContentLinks(nodes: NodeList) {
-        return Array.from(nodes).reduce(
-            (result, node) => {
-                const contentLinks =
-                    node instanceof HTMLElement
-                        ? node.getElementsByClassName(AbstractHandler.CONTENT_LINK)
-                        : [];
-                return [...result, ...contentLinks];
-            },
-            [] as Element[]
-        );
+        return Array.from(nodes).reduce((result, node) => {
+            const contentLinks =
+                node instanceof HTMLElement
+                    ? node.getElementsByClassName(AbstractHandler.CONTENT_LINK)
+                    : [];
+            return [...result, ...contentLinks];
+        }, [] as Element[]);
     }
 
     protected findClosestProjectId(element: Element) {

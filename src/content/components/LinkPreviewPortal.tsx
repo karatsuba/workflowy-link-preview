@@ -5,7 +5,7 @@ type LinkPreviewPortalProps = {
     id: string;
 };
 
-export default class extends React.Component<LinkPreviewPortalProps> {
+export default class LinkPreviewPortal extends React.Component<LinkPreviewPortalProps> {
     private container: Element = document.createElement('div');
     private parentContainer: Element | null = null;
 

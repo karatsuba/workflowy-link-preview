@@ -43,9 +43,6 @@ type DispatchProps = {
 
 type LinkPreviewerProps = StateProps & DispatchProps;
 
-export default connect<StateProps, DispatchProps, {}, State>(
-    mapStateToProps,
-    {
-        observeMutations
-    }
-)(LinkPreviewer);
+export default connect<StateProps, DispatchProps, {}, State>(mapStateToProps, {
+    observeMutations
+})(LinkPreviewer);
