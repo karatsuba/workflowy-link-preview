@@ -62,9 +62,6 @@ const mapStateToProps = (state: State, { linkId }: OwnProps): StateProps => ({
     link: getLinkById(state, linkId)
 });
 
-export default connect<StateProps, DispatchProps, OwnProps, State>(
-    mapStateToProps,
-    {
-        loadLinkPreview
-    }
-)(LinkPreview);
+export default connect<StateProps, DispatchProps, OwnProps, State>(mapStateToProps, {
+    loadLinkPreview
+})(LinkPreview);

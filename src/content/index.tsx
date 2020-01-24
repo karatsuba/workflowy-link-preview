@@ -9,7 +9,7 @@ import LinkPreviewer from './conteiners/LinkPreviewer';
 const resetBackgroundPageStore = ({ dispatch }: Store) => () => dispatch(resetStore());
 
 const initReactApp = (store: Store) => () => {
-    return ReactDOM.render(
+    ReactDOM.render(
         <Provider store={store}>
             <LinkPreviewer />
         </Provider>,
