@@ -2,6 +2,7 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { version } = require('./package.json');
 
 const DIST = path.resolve(__dirname, './dist');
 const RESOURCES = path.resolve(__dirname, './resources');
@@ -37,7 +38,19 @@ module.exports = ({ production = false, reloader = false, analyze = false } = {}
             filename: '[name].js',
             path: DIST
         },
-        plugins: [new CopyPlugin([{ from: MANIFEST, to: DIST }])]
+        plugins: [
+            new CopyPlugin([
+                {
+                    from: MANIFEST,
+                    to: DIST,
+                    transform: content => {
+                        const manifest = JSON.parse(content.toString());
+                        manifest.version = version;
+                        return JSON.stringify(manifest, undefined, 4);
+                    }
+                }
+            ])
+        ]
     };
 
     if (reloader) {
