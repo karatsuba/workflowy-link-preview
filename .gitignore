@@ -1,15 +1,14 @@
 # Dependency directories
 node_modules/
 
-# dotenv environment variables file
-.env
-
-# dependencies
-/.pnp
-.pnp.js
+#app zip
+workflowy-link-preview.zip
 
 # prod build
-/dist
+dist
+
+# VSCode settings
+.vscode
 
 # misc
 .DS_Store
