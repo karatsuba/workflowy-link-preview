@@ -16,15 +16,20 @@
         "ts-loader": "^5.3.3",
         "typescript": "^3.6.3",
         "webpack": "^4.29.5",
+        "webpack-bundle-analyzer": "^3.6.0",
         "webpack-chrome-extension-reloader": "^1.2.0",
         "webpack-cli": "^3.2.3"
     },
     "scripts": {
-        "dev": "npm run clean && webpack --watch --progress",
+        "dev": "npm run clean && webpack --progress --watch --env.reloader",
+        "build:dev": "npm run clean && webpack --progress",
+        "build:prod": "npm run clean && webpack --progress --env.production",
+        "analyze": "npm run clean && webpack --progress --env.production --env.analyze",
         "clean": "rm -rf ./dist",
         "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
     },
     "dependencies": {
+        "@types/node": "^13.5.0",
         "@types/react": "^16.8.4",
         "@types/react-dom": "^16.8.2",
         "@types/react-redux": "^7.0.1",
