@@ -2,12 +2,14 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { version } = require('./package.json');
 
 const DIST = path.resolve(__dirname, './dist');
 const RESOURCES = path.resolve(__dirname, './resources');
 const SRC_BACKGROUND = path.resolve(__dirname, './src/background');
 const SRC_CONTENT = path.resolve(__dirname, './src/content');
 const MANIFEST = path.resolve(RESOURCES, './manifest.json');
+const ICONS = path.resolve(RESOURCES, './icons');
 
 const getBaseConfig = production => ({
     mode: production ? 'production' : 'development',
@@ -37,7 +39,23 @@ module.exports = ({ production = false, reloader = false, analyze = false } = {}
             filename: '[name].js',
             path: DIST
         },
-        plugins: [new CopyPlugin([{ from: MANIFEST, to: DIST }])]
+        plugins: [
+            new CopyPlugin([
+                {
+                    from: MANIFEST,
+                    to: DIST,
+                    transform: content => {
+                        const manifest = JSON.parse(content.toString());
+                        manifest.version = version;
+                        return JSON.stringify(manifest, undefined, 4);
+                    }
+                },
+                {
+                    from: ICONS,
+                    to: path.resolve(DIST, './icons')
+                }
+            ])
+        ]
     };
 
     if (reloader) {
