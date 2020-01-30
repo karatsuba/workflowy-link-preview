@@ -27,7 +27,7 @@
         "zip": "zip -r workflowy-link-preview.zip ./dist",
         "deploy": "npm run build:prod && npm run zip",
         "analyze": "npm run clean && webpack --progress --env.production --env.analyze",
-        "clean": "rm -rf ./dist",
+        "clean": "rm -rf ./dist && rm -f ./workflowy-link-preview.zip",
         "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
     },
     "dependencies": {
