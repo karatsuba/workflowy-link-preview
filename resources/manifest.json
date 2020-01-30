@@ -1,7 +1,7 @@
 {
-    "name": "Workflowy Link Preview",
+    "name": "WorkFlowy Link Preview",
     "version": "1.0",
-    "description": "Workflowy Link Preview for https://workflowy.com/",
+    "description": "Link Previewer for https://workflowy.com/",
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
