@@ -1,8 +1,0 @@
-{
-    "prettier.tabWidth": 4,
-    "prettier.singleQuote": true,
-    "prettier.jsxSingleQuote": true,
-    "prettier.printWidth": 100,
-    "editor.formatOnSave": true,
-    "eslint.enable": true
-}
