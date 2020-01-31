@@ -17,6 +17,6 @@
             "js": ["content.js"]
         }
     ],
-    "permissions": ["http://*/*", "https://*/*", "activeTab"],
+    "permissions": ["http://*/*", "https://*/*", "https://workflowy.com/*"],
     "manifest_version": 2
 }
