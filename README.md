@@ -34,7 +34,7 @@ or image link:
 
 ## Installation
 
-1. Add [Chrome extension](link_to_chrome_market) to your browser.
+1. Add [Chrome extension](https://chrome.google.com/webstore/detail/workflowy-link-preview/fljjakgbhacdbaakanomobomelbkjafm) to your browser.
 2. Refresh https://workflowy.com/ web page.
 
 ## Motivation
