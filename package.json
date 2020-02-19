@@ -1,6 +1,6 @@
 {
     "name": "workflowy-link-preview",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "private": true,
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^2.2.0",
@@ -27,7 +27,7 @@
         "zip": "zip -r workflowy-link-preview.zip ./dist",
         "deploy": "npm run build:prod && npm run zip",
         "analyze": "npm run clean && webpack --progress --env.production --env.analyze",
-        "clean": "rm -rf ./dist",
+        "clean": "rm -rf ./dist && rm -f ./workflowy-link-preview.zip",
         "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
     },
     "dependencies": {

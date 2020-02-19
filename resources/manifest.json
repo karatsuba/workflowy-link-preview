@@ -1,7 +1,6 @@
 {
-    "name": "Workflowy Link Preview",
-    "version": "1.0",
-    "description": "Workflowy Link Preview for https://workflowy.com/",
+    "name": "WorkFlowy Link Preview",
+    "description": "Link Previewer for https://workflowy.com/",
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
@@ -17,6 +16,6 @@
             "js": ["content.js"]
         }
     ],
-    "permissions": ["http://*/*", "https://*/*", "activeTab"],
+    "permissions": ["http://*/*", "https://*/*"],
     "manifest_version": 2
 }

@@ -8,8 +8,8 @@ export class NodeAddedHandler extends AbstractHandler {
             this.targetHasClassName(mutation.target, 'content')
         ) {
             // CONTENT LINK WAS ADDED
-            const [link] = this.getContentLink(mutation.addedNodes);
-            if (link && this.isMarkdownLink(mutation.target as Element)) {
+            const [link] = this.getMarkdownContentLink(mutation.addedNodes);
+            if (link) {
                 const payload = this.prepareLinkPayload(link as HTMLAnchorElement);
                 if (payload.id && payload.url) {
                     this.dispatch(addLink(payload.id, payload.url));
@@ -18,13 +18,5 @@ export class NodeAddedHandler extends AbstractHandler {
         }
 
         super.handle(mutation);
-    }
-
-    private isConnectedContentLink(node: Node) {
-        return this.isContentLink(node) && node.isConnected;
-    }
-
-    private getContentLink(nodes: NodeList) {
-        return Array.from(nodes).filter(this.isConnectedContentLink.bind(this));
     }
 }
