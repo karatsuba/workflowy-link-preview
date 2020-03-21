@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import LinkPreview from './LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
 import { CommonActions } from '../../common/actions/types';
-import { observeMutations } from '../../common/actions';
+// import { observeMutations } from '../../common/actions';
+import { observe } from 'redux-dom-mutation-observer';
 import { State } from '../../background/reducers';
 import { getLinksIds } from '../selectors';
 
 class LinkPreviewer extends React.Component<LinkPreviewerProps> {
     componentDidMount(): void {
-        this.props.observeMutations();
+        this.props.observe('app');
     }
 
     shouldComponentUpdate(nextProps: LinkPreviewerProps): boolean {
@@ -38,11 +39,11 @@ type StateProps = {
 };
 
 type DispatchProps = {
-    observeMutations: () => CommonActions;
+    observe: (id: string) => any;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;
 
 export default connect<StateProps, DispatchProps, {}, State>(mapStateToProps, {
-    observeMutations
+    observe
 })(LinkPreviewer);

@@ -1,17 +1,20 @@
+import { Dispatch } from 'redux';
 import { AbstractHandler } from './AbstractHandler';
 import { removeLink } from '../../../common/actions/link';
 
 export class NodeCollapsedHandler extends AbstractHandler {
-    public handle(mutation: MutationRecord): void {
+    public handle(dispatch: Dispatch, action: any): void {
+        const { mutation } = action.payload;
+
         // CONTENT LINK NODE WERE COLLAPSED => DELETED
         if (
             this.anyMutations(mutation.removedNodes) &&
             this.targetHasClassName(mutation.target, 'project')
         ) {
             const ids = this.getContentLinksIds(mutation.removedNodes);
-            ids.forEach(id => id && this.dispatch(removeLink(id)));
+            ids.forEach(id => id && dispatch(removeLink(id)));
         }
 
-        super.handle(mutation);
+        super.handle(dispatch, action);
     }
 }

@@ -1,8 +1,11 @@
+import { Dispatch } from 'redux';
 import { AbstractHandler } from './AbstractHandler';
 import { removeLink } from '../../../common/actions/link';
 
 export class NodeEditedHandler extends AbstractHandler {
-    public handle(mutation: MutationRecord): void {
+    public handle(dispatch: Dispatch, action: any): void {
+        const { mutation } = action.payload;
+
         // CONTENT DIV WAS EDITED
         if (
             this.anyContentLinkNodes(mutation.removedNodes) &&
@@ -11,11 +14,11 @@ export class NodeEditedHandler extends AbstractHandler {
             // GET LINK ID AND DISPATCH REMOVE ACTION
             const id = this.findClosestProjectId(mutation.target as Element);
             if (id) {
-                this.dispatch(removeLink(id));
+                dispatch(removeLink(id));
             }
         }
 
-        super.handle(mutation);
+        super.handle(dispatch, action);
     }
 
     private anyContentLinkNodes(nodes: NodeList) {

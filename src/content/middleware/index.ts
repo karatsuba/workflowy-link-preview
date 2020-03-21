@@ -1,18 +1,32 @@
-import ReduxMutationObserver from './ReduxMutationObserver';
-import { OBSERVE_MUTATIONS, IGNORE_MUTATIONS } from '../../common/actions/types';
+import { MiddlewareAPI, Middleware } from 'redux';
+import { MUTATION_RECORD } from 'redux-dom-mutation-observer';
 
-import { Middleware, MiddlewareAPI, Action } from 'redux';
+import { Handler } from './handlers/Handler';
+import { NodeMovedUpDownHandler } from './handlers/NodeMovedUpDownHandler';
+import { NodeAddedHandler } from './handlers/NodeAddedHandler';
+import { NodeBulletClickHandler } from './handlers/NodeBulletClickHandler';
+import { NodeCollapsedHandler } from './handlers/NodeCollapsedHandler';
+import { NodeDraggedHandler } from './handlers/NodeDraggedHandler';
+import { NodeEditedHandler } from './handlers/NodeEditedHandler';
+
+const setupHandlers = (): Handler => {
+    const handler = new NodeMovedUpDownHandler();
+    handler
+        .setNext(new NodeAddedHandler())
+        .setNext(new NodeBulletClickHandler())
+        .setNext(new NodeCollapsedHandler())
+        .setNext(new NodeDraggedHandler())
+        .setNext(new NodeEditedHandler());
+
+    return handler;
+};
 
 const createMiddleware = (): Middleware => {
-    const reduxMutationObserver = new ReduxMutationObserver();
+    const handlers = setupHandlers();
 
-    return (store: MiddlewareAPI) => next => (action: Action) => {
-        if (action.type === OBSERVE_MUTATIONS) {
-            reduxMutationObserver.observe(store);
-        }
-
-        if (action.type === IGNORE_MUTATIONS) {
-            reduxMutationObserver.disconnect();
+    return ({ dispatch }: MiddlewareAPI) => next => (action: any) => {
+        if (action.type === MUTATION_RECORD) {
+            handlers.handle(dispatch, action);
         }
 
         return next(action);
