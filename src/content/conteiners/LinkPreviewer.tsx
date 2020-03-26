@@ -10,7 +10,7 @@ import { getLinksIds } from '../selectors';
 
 class LinkPreviewer extends React.Component<LinkPreviewerProps> {
     componentDidMount(): void {
-        this.props.observe('app');
+        this.props.observe('app', { childList: true, subtree: true });
     }
 
     shouldComponentUpdate(nextProps: LinkPreviewerProps): boolean {
@@ -39,7 +39,7 @@ type StateProps = {
 };
 
 type DispatchProps = {
-    observe: (id: string) => any;
+    observe: (id: string, options: MutationObserverInit) => any;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;

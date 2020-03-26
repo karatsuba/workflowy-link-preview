@@ -2,7 +2,7 @@ import { Store, applyMiddleware } from 'webext-redux';
 import mutationHandlerMiddleware from '../middleware';
 import createMiddleware from 'redux-dom-mutation-observer';
 
-const ReduxDOMMutationObserver = createMiddleware({ childList: true, subtree: true });
+const ReduxDOMMutationObserver = createMiddleware();
 
 const store = new Store();
 
