@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { observe } from 'redux-dom-mutation-observer';
 import LinkPreview from './LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
 import { CommonActions } from '../../common/actions/types';
-// import { observeMutations } from '../../common/actions';
-import { observe } from 'redux-dom-mutation-observer';
 import { State } from '../../background/reducers';
 import { getLinksIds } from '../selectors';
 
@@ -39,7 +38,7 @@ type StateProps = {
 };
 
 type DispatchProps = {
-    observe: (id: string, options: MutationObserverInit) => any;
+    observe: (id: string, options: MutationObserverInit) => CommonActions;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;

@@ -1,3 +1,4 @@
+import { ObserveAction, DisconectAction } from 'redux-dom-mutation-observer';
 import Link from '../models/Link';
 
 export const LOAD_LINK_PREVIEW_ALIAS = 'LOAD_LINK_PREVIEW_ALIAS';
@@ -42,18 +43,6 @@ export type RemoveLinkAction = {
     payload: Pick<Link, 'id'>;
 };
 
-export const OBSERVE_MUTATIONS = 'OBSERVE_MUTATIONS';
-
-export type ObserveMutationAction = {
-    type: typeof OBSERVE_MUTATIONS;
-};
-
-export const IGNORE_MUTATIONS = 'IGNORE_MUTATIONS';
-
-export type IgnoreMutationAction = {
-    type: typeof IGNORE_MUTATIONS;
-};
-
 export const RESET_STORE = 'RESET_STORE';
 
 export type ResetStoreAction = {
@@ -67,6 +56,6 @@ export type CommonActions =
     | LoadLinkPreviewFailureAction
     | AddLinkAction
     | RemoveLinkAction
-    | ObserveMutationAction
-    | IgnoreMutationAction
+    | ObserveAction
+    | DisconectAction
     | ResetStoreAction;

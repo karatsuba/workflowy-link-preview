@@ -1,9 +1,5 @@
-import {
-    OBSERVE_MUTATIONS,
-    IGNORE_MUTATIONS,
-    RESET_STORE,
-    CommonActions
-} from '../../../common/actions/types';
+import { OBSERVE, DISCONNECT } from 'redux-dom-mutation-observer';
+import { RESET_STORE, CommonActions } from '../../../common/actions/types';
 
 type MutationsState = Readonly<{
     observing: boolean;
@@ -15,14 +11,14 @@ const initState: MutationsState = {
 
 export default (state = initState, action: CommonActions): MutationsState => {
     switch (action.type) {
-        case OBSERVE_MUTATIONS: {
+        case OBSERVE: {
             return {
                 ...state,
                 observing: true
             };
         }
 
-        case IGNORE_MUTATIONS: {
+        case DISCONNECT: {
             return {
                 ...state,
                 observing: false
