@@ -1,4 +1,3 @@
-import { ObserveAction, DisconectAction } from 'redux-dom-mutation-observer';
 import Link from '../models/Link';
 
 export const LOAD_LINK_PREVIEW_ALIAS = 'LOAD_LINK_PREVIEW_ALIAS';
@@ -56,6 +55,4 @@ export type CommonActions =
     | LoadLinkPreviewFailureAction
     | AddLinkAction
     | RemoveLinkAction
-    | ObserveAction
-    | DisconectAction
     | ResetStoreAction;

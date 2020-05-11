@@ -24,7 +24,7 @@ const setupHandlers = (): Handler => {
 const createMiddleware = (): Middleware => {
     const handlers = setupHandlers();
 
-    return ({ dispatch }: MiddlewareAPI) => next => (action: any) => {
+    return ({ dispatch }: MiddlewareAPI) => (next) => (action: any) => {
         if (action.type === MUTATION_RECORD) {
             handlers.handle(dispatch, action);
         }

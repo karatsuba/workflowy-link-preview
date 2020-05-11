@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { observe } from 'redux-dom-mutation-observer';
+import { observe, ReduxDOMMutationObserverActions } from 'redux-dom-mutation-observer';
 import LinkPreview from './LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
-import { CommonActions } from '../../common/actions/types';
 import { State } from '../../background/reducers';
 import { getLinksIds } from '../selectors';
 
@@ -21,7 +20,7 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
 
     render(): JSX.Element[] {
         const { linksIds } = this.props;
-        return linksIds.map(id => (
+        return linksIds.map((id) => (
             <LinkPreviewPortal key={id} id={id}>
                 <LinkPreview linkId={id} />
             </LinkPreviewPortal>
@@ -38,7 +37,7 @@ type StateProps = {
 };
 
 type DispatchProps = {
-    observe: (id: string, options: MutationObserverInit) => CommonActions;
+    observe: (id: string, options: MutationObserverInit) => ReduxDOMMutationObserverActions;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;
