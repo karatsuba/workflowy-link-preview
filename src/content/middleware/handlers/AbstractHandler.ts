@@ -6,20 +6,15 @@ export abstract class AbstractHandler implements Handler {
     private static readonly MARKDOWN_LINK_REGEX = /\!\((.*?)\)/;
 
     private nextHandler!: Handler;
-    public dispatch: Dispatch;
-
-    constructor(dispatch: Dispatch) {
-        this.dispatch = dispatch;
-    }
 
     public setNext(handler: Handler): Handler {
         this.nextHandler = handler;
         return handler;
     }
 
-    public handle(mutation: MutationRecord): void {
+    public handle(dispatch: Dispatch, action: any): void {
         if (this.nextHandler) {
-            this.nextHandler.handle(mutation);
+            this.nextHandler.handle(dispatch, action);
         }
     }
 

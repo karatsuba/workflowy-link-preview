@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { observe, ReduxDOMMutationObserverActions } from 'redux-dom-mutation-observer';
 import LinkPreview from './LinkPreview';
 import LinkPreviewPortal from '../components/LinkPreviewPortal';
-import { CommonActions } from '../../common/actions/types';
-import { observeMutations } from '../../common/actions';
 import { State } from '../../background/reducers';
 import { getLinksIds } from '../selectors';
 
 class LinkPreviewer extends React.Component<LinkPreviewerProps> {
     componentDidMount(): void {
-        this.props.observeMutations();
+        this.props.observe('app', { childList: true, subtree: true });
     }
 
     shouldComponentUpdate(nextProps: LinkPreviewerProps): boolean {
@@ -21,7 +20,7 @@ class LinkPreviewer extends React.Component<LinkPreviewerProps> {
 
     render(): JSX.Element[] {
         const { linksIds } = this.props;
-        return linksIds.map(id => (
+        return linksIds.map((id) => (
             <LinkPreviewPortal key={id} id={id}>
                 <LinkPreview linkId={id} />
             </LinkPreviewPortal>
@@ -38,11 +37,11 @@ type StateProps = {
 };
 
 type DispatchProps = {
-    observeMutations: () => CommonActions;
+    observe: (id: string, options: MutationObserverInit) => ReduxDOMMutationObserverActions;
 };
 
 type LinkPreviewerProps = StateProps & DispatchProps;
 
 export default connect<StateProps, DispatchProps, {}, State>(mapStateToProps, {
-    observeMutations
+    observe
 })(LinkPreviewer);
