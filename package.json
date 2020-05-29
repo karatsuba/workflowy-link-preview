@@ -17,8 +17,8 @@
         "typescript": "^3.8.3",
         "webpack": "^4.29.5",
         "webpack-bundle-analyzer": "^3.6.0",
-        "webpack-chrome-extension-reloader": "^1.2.0",
-        "webpack-cli": "^3.2.3"
+        "webpack-cli": "^3.2.3",
+        "webpack-extension-reloader": "^1.1.4"
     },
     "scripts": {
         "dev": "npm run clean && webpack --progress --watch --env.reloader",
