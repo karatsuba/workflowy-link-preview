@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     user-select: text;
-    padding-left: 10px;
+    padding-left: 5px;
     border-left: 1px solid black;
 `;
 
@@ -15,5 +15,5 @@ export const Description = styled.p`
 `;
 
 export const Image = styled.img`
-    max-height: 300px;
+    max-height: 250px;
 `;
