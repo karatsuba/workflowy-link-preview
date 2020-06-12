@@ -1,6 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
+const ExtensionReloader = require('webpack-extension-reloader');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { version } = require('./package.json');
 
@@ -11,7 +11,7 @@ const SRC_CONTENT = path.resolve(__dirname, './src/content');
 const MANIFEST = path.resolve(RESOURCES, './manifest.json');
 const ICONS = path.resolve(RESOURCES, './icons');
 
-const getBaseConfig = production => ({
+const getBaseConfig = (production) => ({
     mode: production ? 'production' : 'development',
     devtool: production ? false : 'inline-cheap-source-map',
     module: {
@@ -44,7 +44,7 @@ module.exports = ({ production = false, reloader = false, analyze = false } = {}
                 {
                     from: MANIFEST,
                     to: DIST,
-                    transform: content => {
+                    transform: (content) => {
                         const manifest = JSON.parse(content.toString());
                         manifest.version = version;
                         return JSON.stringify(manifest, undefined, 4);
@@ -59,7 +59,15 @@ module.exports = ({ production = false, reloader = false, analyze = false } = {}
     };
 
     if (reloader) {
-        config.plugins.push(new ChromeExtensionReloader());
+        config.plugins.push(
+            new ExtensionReloader({
+                reloadPage: true,
+                entries: {
+                    contentScript: 'content',
+                    background: 'background'
+                }
+            })
+        );
     }
 
     if (analyze) {

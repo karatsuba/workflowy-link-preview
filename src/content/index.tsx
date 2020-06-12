@@ -17,7 +17,4 @@ const initReactApp = (store: Store) => () => {
     );
 };
 
-store
-    .ready()
-    .then(resetBackgroundPageStore(store))
-    .then(initReactApp(store));
+store.ready().then(resetBackgroundPageStore(store)).then(initReactApp(store));
