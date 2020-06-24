@@ -12,7 +12,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://workflowy.com/*"],
+            "matches": ["*://*.workflowy.com/*"],
             "js": ["content.js"]
         }
     ],
